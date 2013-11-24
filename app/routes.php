@@ -12,3 +12,5 @@
 */
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
+
+Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyles'));
