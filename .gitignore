@@ -4,3 +4,4 @@ composer.lock
 .DS_Store
 Thumbs.db
 *.swp
+/app/config/database.php
