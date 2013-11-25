@@ -3,7 +3,7 @@
     <head>
         <title>
             @section('title')
-            Laravel 4 - Tutorial
+            Rasla
             @show
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
