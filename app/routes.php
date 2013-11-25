@@ -12,5 +12,6 @@
 */
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
-
 Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyles'));
+
+Route::any("login", [ "as" => "user/login", "uses" => "UserController@loginAction" ]);
