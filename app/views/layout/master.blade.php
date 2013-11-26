@@ -59,6 +59,16 @@
         <!-- Container -->
         <div class="container">
 
+            <!-- Error Messages -->
+            @if($errors->has())
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4 class="alert-heading">Error</h4>
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br />
+                    @endforeach
+                </div>
+            @endif
             <!-- Success-Messages -->
             @if ($message = Session::get('success'))
                 <div class="alert alert-success alert-block">
