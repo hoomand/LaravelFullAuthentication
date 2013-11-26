@@ -14,4 +14,7 @@
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyles'));
 
-Route::any("login", [ "as" => "user/login", "uses" => "UserController@loginAction" ]);
+//Route::any("login", [ "as" => "user/login", "uses" => "UserController@loginAction" ]);
+Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
+Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));
+Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
