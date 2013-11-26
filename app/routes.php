@@ -18,3 +18,5 @@ Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyle
 Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
 Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
+
+Route::get('profile', array('as'=>'profile', 'uses'=>'UserController@getProfile'));
