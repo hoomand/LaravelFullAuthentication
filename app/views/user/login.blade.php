@@ -7,7 +7,7 @@
 
 @section('content')
     <h2>Login</h2>
-    {{ Form::open(array('route' => 'user/login', 'method' => 'POST')) }}
+    {{ Form::open(array('route' => 'login', 'method' => 'POST')) }}
     {{ Form::token() }}
     <p>
         {{ Form::label('username', 'Username') }}<br />
