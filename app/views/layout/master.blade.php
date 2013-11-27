@@ -33,7 +33,7 @@
                         <span class="icon-bar"></span>
                     </a>
 
-                    <a class="brand" href="#">Laravel</a>
+                    {{ HTML::link(Route('home'), 'Home') }}
 
                     <!-- Everything you want hidden at 940px or less, place within here -->
                     <div class="nav-collapse collapse">
@@ -48,7 +48,10 @@
                             @if ( Auth::guest() )
                                 <li>{{ HTML::link('login', 'Login') }}</li>
                             @else
-                                <li>{{ HTML::link('logout', 'Logout') }}</li>
+                            <li>
+                            {{ HTML::link('logout', 'Logout', array('style' => 'display: inline')) }}
+                                {{ HTML::link('profile', Auth::user()->username, array('style' => 'display: inline; color: #FFFFFF')) }}
+                            </li>
                             @endif
                         </ul>
                     </div>
