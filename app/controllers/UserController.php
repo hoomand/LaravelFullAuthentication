@@ -39,6 +39,29 @@ class UserController extends BaseController {
         if (Input::server("REQUEST_METHOD") == "POST")
         {
 
+            $rules = array(
+                'email' => 'required|email',
+                'gender' => 'required|in:male,female',
+                'first_name' => 'required|alpha_space',
+                'last_name' => 'required|alpha_space'
+            );
+            $validation = Validator::make(Input::all(), $rules);
+
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            User::where('id','=',Auth::user()->id)->update(array(
+                'first_name' => Input::get('first_name'),
+                'last_name' => Input::get('last_name'),
+                'email' => Input::get('email'),
+                'phone' => Input::get('phone'),
+                'cellphone' => Input::get('cellphone'),
+                'gender' => Input::get('gender')
+            ));
+
+            return Redirect::route('profile')->with('success', 'Profile info successfully updated');
+
+
         }
         return View::make('user.profile_edit');
     }
