@@ -30,5 +30,5 @@
         
 
     </table>
-    <a href="{{{ URL::to('profile_edit') }}}" class="btn btn-primary btn-sm active" role="button">Edit Profile</a>
+    {{ HTML::link('profile_edit', 'Edit Profile', array('class' => "btn btn-primary btn-sm active")) }}
 @stop
