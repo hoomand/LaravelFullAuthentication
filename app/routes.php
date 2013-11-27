@@ -22,4 +22,5 @@ Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 Route::group(["before" => "auth"], function()
     {
         Route::get('profile', array('as'=>'profile', 'uses'=>'UserController@getProfile'));
+        Route::any('profile_edit', array('as'=>'profile_edit', 'uses'=>'UserController@editProfile'));
     });

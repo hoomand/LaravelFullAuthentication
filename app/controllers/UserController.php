@@ -34,6 +34,14 @@ class UserController extends BaseController {
     {
         return View::make('user.profile');
     }
+    public function editProfile()
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+
+        }
+        return View::make('user.profile_edit');
+    }
 
 
 
