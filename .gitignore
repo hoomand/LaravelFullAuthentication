@@ -6,3 +6,4 @@ Thumbs.db
 *.swp
 *.swo
 /app/config/database.php
+.idea/*
