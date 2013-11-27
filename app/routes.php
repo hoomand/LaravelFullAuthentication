@@ -19,6 +19,8 @@ Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
 Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 
+Route::get('users', array('as'=>'users', 'uses'=>'UserController@listUsers'));
+
 Route::group(array("before" => "auth"), function()
     {
         Route::get('profile', array('as'=>'profile', 'uses'=>'UserController@getProfile'));

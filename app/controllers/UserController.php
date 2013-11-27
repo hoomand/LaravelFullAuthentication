@@ -66,6 +66,12 @@ class UserController extends BaseController {
         return View::make('user.profile_edit');
     }
 
+    public function listUsers()
+    {
+        $users = User::all();
+        return View::make('user.list')->with('users',$users);
+    }
+
 
 
 }
