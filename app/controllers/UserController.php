@@ -38,14 +38,7 @@ class UserController extends BaseController {
     {
         if (Input::server("REQUEST_METHOD") == "POST")
         {
-
-            $rules = array(
-                'email' => 'required|email',
-                'gender' => 'required|in:male,female',
-                'first_name' => 'required|alpha_space',
-                'last_name' => 'required|alpha_space'
-            );
-            $validation = Validator::make(Input::all(), $rules);
+            $validation = User::validate_update(Input::all());
 
             if ($validation->fails())
                 return Redirect::back()->withErrors($validation)->withInput();
