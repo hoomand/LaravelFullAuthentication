@@ -89,4 +89,14 @@ class UserController extends BaseController {
 
     }
 
+    public function deleteUser($user_id)
+    {
+        $user = User::find($user_id);
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $user->delete();
+            return Redirect::route('users')->with('success', 'User ' . $user->getFullNameWithUsername() . ' got deleted');
+        }
+        return View::make('user.user_delete')->with('user', $user);
+    }
 }

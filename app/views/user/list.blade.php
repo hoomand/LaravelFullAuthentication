@@ -28,6 +28,7 @@
             <td>{{$user->cellphone}}</td>
             <td>
                 {{ HTML::link('user_edit/' . $user->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
+                {{ HTML::link('user_delete/' . $user->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
             </td>
         </tr>
         @endforeach
