@@ -22,6 +22,16 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
                 'first_name' => 'required|alpha_space',
                 'last_name' => 'required|alpha_space'
         );
+
+        public function getFullName()
+        {
+            return $this->first_name . ' ' . $this->last_name;
+        }
+
+        public function getFullNameWithUsername()
+        {
+            return '@' . $this->username . ' [' . $this->getFullName() . ']';
+        }
 /**
 	 * The database table used by the model.
 	 *
