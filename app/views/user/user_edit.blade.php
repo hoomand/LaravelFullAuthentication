@@ -10,6 +10,7 @@
     
     {{ Form::Open(array('route' => 'user_edit_post', 'method' => 'post')) }}
     {{ Form::token() }}
+    {{ Form::hidden('id', $user->id) }}
     <table class="table">
         <tr>
             <th>{{ Form::label('first_name', 'First Name') }}:</th>

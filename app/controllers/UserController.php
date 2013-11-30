@@ -70,5 +70,23 @@ class UserController extends BaseController {
         $user = User::find($user_id);
         return View::make('user.user_edit')->with('user', $user);
     }
+    public function postEditUser()
+    {
+        $validation = User::validate_update(Input::all());
+        if ($validation->fails())
+            return Redirect::back()->withErrors($validation)->withInput();
+
+        User::where('id','=',Input::get('id'))->update(array(
+            'first_name' => Input::get('first_name'),
+            'last_name' => Input::get('last_name'),
+            'email' => Input::get('email'),
+            'phone' => Input::get('phone'),
+            'cellphone' => Input::get('cellphone'),
+            'gender' => Input::get('gender')
+        ));
+
+        return Redirect::route('users')->with('success', 'User info info successfully updated');
+
+    }
 
 }
