@@ -72,6 +72,10 @@ class UserController extends BaseController {
         return View::make('user.list')->with('users',$users);
     }
 
-
+    public function getEditUser($user_id)
+    {
+        $user = User::find($user_id);
+        return View::make('user.user_edit')->with('user', $user);
+    }
 
 }

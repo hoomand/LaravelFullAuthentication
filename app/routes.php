@@ -20,6 +20,7 @@ Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin')
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 
 Route::get('users', array('as'=>'users', 'uses'=>'UserController@listUsers'));
+Route::get('user_edit/{id}', array('uses' => 'UserController@getEditUser'));
 
 Route::group(array("before" => "auth"), function()
     {

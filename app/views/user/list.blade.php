@@ -16,6 +16,7 @@
             <th>Gender</th>
             <th>Email</th>
             <th>Cell Phone</th>
+            <th>Actions</th>
         </tr>
         @foreach($users as $user)
         <tr>
@@ -25,6 +26,9 @@
             <td>{{$user->gender}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->cellphone}}</td>
+            <td>
+                {{ HTML::link('user_edit/' . $user->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
+            </td>
         </tr>
         @endforeach
 
