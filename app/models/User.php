@@ -16,7 +16,13 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6'
         );
-	/**
+	public static $update_rules = array(
+                'email' => 'required|email',
+                'gender' => 'required|in:male,female',
+                'first_name' => 'required|alpha_space',
+                'last_name' => 'required|alpha_space'
+        );
+/**
 	 * The database table used by the model.
 	 *
 	 * @var string
