@@ -6,6 +6,7 @@
 @stop
 
 @section('content')
+    {{ HTML::link(route('user_create'), 'Create User', array('class' => "btn btn-success btn-sm active")) }}
     <h3>Users</h3>
 
     <table class="table">

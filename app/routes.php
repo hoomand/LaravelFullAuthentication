@@ -20,6 +20,7 @@ Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin')
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 
 Route::get('users', array('as'=>'users', 'uses'=>'UserController@listUsers'));
+Route::any('user_create', array('as' => 'user_create', 'uses' => 'UserController@createUser'));
 Route::get('user_edit/{id}', array('uses' => 'UserController@getEditUser'))->where('id', '[0-9]+');
 Route::post('user_edit_post', array('as' => 'user_edit_post', 'before' => 'csrf', 'uses' => 'UserController@postEditUser'));
 Route::any('user_delete/{id}', array('uses' => 'UserController@deleteUser'))->where('id', '[0-9]+');

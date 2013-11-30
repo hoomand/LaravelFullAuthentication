@@ -65,6 +65,30 @@ class UserController extends BaseController {
         return View::make('user.list')->with('users',$users);
     }
 
+    public function createUser()
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $validation = User::validate_create(Input::all());
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            $user = new User;
+            $user->username = Input::get('username');
+            $user->first_name = Input::get('first_name');
+            $user->last_name = Input::get('last_name');
+            $user->password = Hash::make(Input::get('password'));
+            $user->email = Input::get('email');
+            $user->gender = Input::get('gender');
+            $user->phone = Input::get('phone');
+            $user->cellphone = Input::get('cellphone');
+
+            $user->save();
+            return Redirect::route('users')->with('success', 'New user ' . $user->getFullNameWithUsername() . ' got created');
+        }
+        return View::make('user.create');
+    }
+
     public function getEditUser($user_id)
     {
         $user = User::find($user_id);
