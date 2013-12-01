@@ -16,6 +16,7 @@ class CreateGroupTable extends Migration {
                     $table->bigIncrements("id");
                     $table->string("name");
                     $table->timestamps();
+                    $table->date("deleted_at")->nullable();
             });
         }
 
