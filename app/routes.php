@@ -25,6 +25,8 @@ Route::get('user_edit/{id}', array('uses' => 'UserController@getEditUser'))->whe
 Route::post('user_edit_post', array('as' => 'user_edit_post', 'before' => 'csrf', 'uses' => 'UserController@postEditUser'));
 Route::any('user_delete/{id}', array('uses' => 'UserController@deleteUser'))->where('id', '[0-9]+');
 
+Route::any('group/index', array('as' => 'group/index', 'uses' => 'GroupController@indexAction'));
+
 Route::group(array("before" => "auth"), function()
     {
         Route::get('profile', array('as'=>'profile', 'uses'=>'UserController@getProfile'));
