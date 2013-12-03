@@ -25,4 +25,15 @@
     {{ Form::close() }}
     {{ HTML::link('role/index', 'Back', array('class' => 'btn btn-warning btn-sm active pull-right')) }}
 
+    <br />
+    <table class="table">
+    @foreach($all_permissions as $permission)
+    <tr>
+        <td>{{ Form::checkbox('permissions', $permission->name) }} {{ ucwords($permission->display) }}</td>
+    </tr>
+    @endforeach
+    </table>
+
+
+
 @stop

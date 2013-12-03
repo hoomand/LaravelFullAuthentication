@@ -24,7 +24,7 @@ class RoleController extends BaseController {
         }
         return View::make('role.edit')
             ->with('role', Role::find($role_id))
-            ->with('permissions', Permission::all());
+            ->with('all_permissions', Permission::all());
     }
 
 }
