@@ -26,6 +26,7 @@ Route::post('user_edit_post', array('as' => 'user_edit_post', 'before' => 'csrf'
 Route::any('user_delete/{id}', array('uses' => 'UserController@deleteUser'))->where('id', '[0-9]+');
 
 Route::any('role/index', array('as' => 'role/index', 'uses' => 'RoleController@indexAction'));
+Route::any('role/edit/{id}', array('uses' => 'RoleController@editAction'));
 
 Route::group(array("before" => "auth"), function()
     {

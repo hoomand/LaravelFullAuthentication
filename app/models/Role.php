@@ -9,10 +9,13 @@ class Role extends BaseModel {
          * @return array
          */
         public static $create_rules = array(
+            'name' => 'required|unique:role|alpha_num|min:4'
         );
 
         public static $update_rules = array(
+            'name' => 'required|unique:role|alpha_num|min:4'
         );
+
 
         protected $table = 'role';
 
