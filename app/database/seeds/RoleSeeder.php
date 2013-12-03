@@ -1,18 +1,18 @@
 <?php
-class GroupSeeder extends DatabaseSeeder {
+class RoleSeeder extends DatabaseSeeder {
     public function run() {
-        $groups = array( 
+        $roles = array(
             array(
                 "name" => "admins"
             ),
             array(
-                "name" => "editors"
+                "name" => "moderators"
             )
         );
 
-        foreach ($groups as $group)
+        foreach ($roles as $role)
         {
-            Group::create($group);
+            Role::create($role);
         }
     }
 }

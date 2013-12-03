@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder {
             Eloquent::unguard();
 
             $this->call('UserSeeder');
-            $this->call('GroupSeeder');
+            $this->call('RoleSeeder');
             $this->call('PermissionSeeder');
         }
 
