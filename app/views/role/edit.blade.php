@@ -26,13 +26,18 @@
     {{ HTML::link('role/index', 'Back', array('class' => 'btn btn-warning btn-sm active pull-right')) }}
 
     <br />
+    <br />
+    <h4>Permissions</h4>
+    {{ Form::open(array('url' => 'role/edit/perms/' . $role->id, 'method' => 'post')) }}
     <table class="table">
     @foreach($all_permissions as $permission)
     <tr>
-        <td>{{ Form::checkbox('permissions', $permission->name) }} {{ ucwords($permission->display) }}</td>
+        <td>{{ Form::checkbox('permissions[]', $permission->id, ( in_array($permission->id, $role_permission_ids) ? true : false )) }} {{ ucwords($permission->display) }}</td>
     </tr>
     @endforeach
     </table>
+    {{ Form::submit('Update', array('class' => 'btn btn-primary btn-sm active pull-right')) }}
+    {{ Form::close() }}
 
 
 

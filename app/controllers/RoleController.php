@@ -22,9 +22,16 @@ class RoleController extends BaseController {
 
             return Redirect::route('role/index')->with('success', 'Role ' . Role::find($role_id)->name . ' got updated successfully');
         }
+
+        $role_permissions = Role::find($role_id)->permissions;
+        $role_permission_ids = array();
+        foreach ($role_permissions as $rp)
+            array_push($role_permission_ids, $rp->id);
+
         return View::make('role.edit')
             ->with('role', Role::find($role_id))
-            ->with('all_permissions', Permission::all());
+            ->with('all_permissions', Permission::all())
+            ->with('role_permission_ids', $role_permission_ids);
     }
 
 }
