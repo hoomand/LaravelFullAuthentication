@@ -34,4 +34,16 @@ class RoleController extends BaseController {
             ->with('role_permission_ids', $role_permission_ids);
     }
 
+    public function editPermission($role_id)
+    {
+        # Delete all permissions first
+        Role::find($role_id)->permissions()->detach();
+        if (Input::has('permissions'))
+        {
+            Role::find($role_id)->permissions()->sync(Input::get('permissions'));
+        }
+
+        return Redirect::back()->with('success', 'Permissions got updated successfully');
+    }
+
 }

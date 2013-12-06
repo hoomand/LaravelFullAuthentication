@@ -27,6 +27,7 @@ Route::any('user_delete/{id}', array('uses' => 'UserController@deleteUser'))->wh
 
 Route::any('role/index', array('as' => 'role/index', 'uses' => 'RoleController@indexAction'));
 Route::any('role/edit/{id}', array('uses' => 'RoleController@editAction'));
+Route::any('role/edit/perms/{id}', array('uses' => 'RoleController@editPermission'));
 
 Route::group(array("before" => "auth"), function()
     {
