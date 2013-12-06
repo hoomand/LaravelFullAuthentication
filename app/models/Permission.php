@@ -12,4 +12,9 @@ class Permission extends BaseModel {
             "updated_at",
             "deleted_at");
 
+        public function roles()
+        {
+            return $this->belongsToMany('Role', 'role_permission');
+        }
+
 }

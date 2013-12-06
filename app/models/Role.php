@@ -16,6 +16,11 @@ class Role extends BaseModel {
             'name' => 'required|unique:role|alpha_num|min:4'
         );
 
+        public function permissions()
+        {
+            return $this->belongsToMany('Permission', 'role_permission');
+        }
+
 
         protected $table = 'role';
 
