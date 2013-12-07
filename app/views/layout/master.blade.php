@@ -48,10 +48,10 @@
                             @if ( Auth::guest() )
                                 <li>{{ HTML::link('login', 'Login') }}</li>
                             @else
-                            <li>
-                            {{ HTML::link('logout', 'Logout', array('style' => 'display: inline')) }}
-                                {{ HTML::link('profile', Auth::user()->username, array('style' => 'display: inline; color: #FFFFFF')) }}
-                            </li>
+                                <li>
+                                    {{ HTML::link('logout', 'Logout', array('style' => 'display: inline')) }}
+                                    {{ HTML::link('user/profile', Auth::user()->username, array('style' => 'display: inline; color: #FFFFFF')) }}
+                                </li>
                             @endif
                         </ul>
                     </div>
