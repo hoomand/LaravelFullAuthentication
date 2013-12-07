@@ -30,11 +30,11 @@ class UserController extends BaseController {
         }
     }
 
-    public function getProfile()
+    public function profileAction()
     {
-        return View::make('user.profile');
+        return View::make('user.profile.index');
     }
-    public function editProfile()
+    public function editProfileAction()
     {
         if (Input::server("REQUEST_METHOD") == "POST")
         {
@@ -52,11 +52,11 @@ class UserController extends BaseController {
                 'gender' => Input::get('gender')
             ));
 
-            return Redirect::route('profile')->with('success', 'Profile info successfully updated');
+            return Redirect::route('user/profile')->with('success', 'Profile info successfully updated');
 
 
         }
-        return View::make('user.profile_edit');
+        return View::make('user.profile.edit');
     }
 
     public function indexAction()

@@ -31,6 +31,6 @@ Route::any('role/edit/perms/{id}', array('uses' => 'RoleController@editPermissio
 
 Route::group(array("before" => "auth"), function()
     {
-        Route::get('profile', array('as'=>'profile', 'uses'=>'UserController@getProfile'));
-        Route::any('profile_edit', array('as'=>'profile_edit', 'uses'=>'UserController@editProfile'));
+        Route::get('user/profile', array('as'=>'user/profile', 'uses'=>'UserController@profileAction'));
+        Route::any('user/profile/edit', array('as'=>'user/profile/edit', 'uses'=>'UserController@editProfileAction'));
     });

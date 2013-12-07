@@ -8,7 +8,7 @@
 @section('content')
     <h3>{{ Auth::user()->username }}</h3>
     
-    {{ Form::Open(array('route' => 'profile_edit', 'method' => 'post')) }}
+    {{ Form::Open(array('route' => 'user/profile/edit', 'method' => 'post')) }}
     {{ Form::token() }}
     <table class="table">
         <tr>

@@ -30,5 +30,5 @@
         
 
     </table>
-    {{ HTML::link('profile_edit', 'Edit Profile', array('class' => "btn btn-primary btn-sm active")) }}
+    {{ HTML::link(route('user/profile/edit'), 'Edit Profile', array('class' => "btn btn-primary btn-sm active")) }}
 @stop
