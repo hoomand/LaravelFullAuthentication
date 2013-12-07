@@ -108,8 +108,29 @@ class UserController extends BaseController {
 
             return Redirect::route('user/index')->with('success', 'User info successfully updated');
         }
-        $user = User::find($user_id);
-        return View::make('user.edit')->with('user', $user);
+
+        $user_roles = User::find($user_id)->roles;
+        $user_role_ids = array();
+        foreach ($user_roles as $ur)
+            array_push($user_role_ids, $ur->id);
+
+        return View::make('user.edit')
+            ->with('user', User::find($user_id))
+            ->with('all_roles', Role::all())
+            ->with('user_role_ids', $user_role_ids);
+    }
+
+    public function editRole($user_id)
+    {
+        # Delete all user roles first
+        User::find($user_id)->roles()->detach();
+        if (Input::has('roles'))
+        {
+            User::find($user_id)->roles()->sync(Input::get('roles'));
+        }
+
+        return Redirect::back()->with('success', 'Roles got updated successfully');
+
     }
 
     public function deleteAction($user_id)

@@ -22,6 +22,7 @@ Route::get('user/index', array('as'=>'user/index', 'uses'=>'UserController@index
 Route::any('user/create', array('as' => 'user/create', 'uses' => 'UserController@createAction'));
 Route::get('user/edit/{id}', array('uses' => 'UserController@editAction'))->where('id', '[0-9]+');
 Route::post('user/edit/{id}', array('before' => 'csrf', 'uses' => 'UserController@editAction'))->where('id', '[0-9]+');
+Route::post('user/edit/roles/{id}', array('before' => 'csrf', 'uses' => 'UserController@editRole'))->where('id', '[0-9]+');
 Route::any('user/delete/{id}', array('uses' => 'UserController@deleteAction'))->where('id', '[0-9]+');
 
 Route::any('role/index', array('as' => 'role/index', 'uses' => 'RoleController@indexAction'));

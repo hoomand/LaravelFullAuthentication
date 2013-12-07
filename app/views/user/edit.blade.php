@@ -37,4 +37,20 @@
     </table>
     {{ Form::submit('Update', array('class' => "btn btn-primary btn-sm active pull-right")) }}
     {{ Form::close() }}
+
+    <br />
+    <br />
+    <h4>Roles</h4>
+    {{ Form::open(array('url' => 'user/edit/roles/' . $user->id, 'method' => 'post')) }}
+    <table class="table">
+    @foreach($all_roles as $role)
+    <tr>
+        <td>{{ Form::checkbox('roles[]', $role->id, ( in_array($role->id, $user_role_ids) ? true : false )) }} {{ ucwords($role->name) }}</td>
+    </tr>
+    @endforeach
+    </table>
+    {{ Form::submit('Update', array('class' => 'btn btn-primary btn-sm active pull-right')) }}
+    {{ Form::close() }}
+
+
 @stop
