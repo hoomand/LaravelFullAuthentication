@@ -13,6 +13,7 @@
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyles'));
+Route::get('404', array('as' => '404', 'uses' => 'HomeController@show404'));
 
 Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
 Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));

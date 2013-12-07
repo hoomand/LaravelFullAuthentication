@@ -24,5 +24,10 @@ class HomeController extends BaseController {
 		return View::make('styles');
 	}
 
+        public function show404()
+        {
+            return View::make('404');
+        }
+
 
 }
