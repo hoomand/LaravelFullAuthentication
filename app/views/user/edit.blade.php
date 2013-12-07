@@ -35,6 +35,6 @@
         
 
     </table>
-    {{ Form::submit('Update', array('class' => "btn btn-primary btn-sm active")) }}
+    {{ Form::submit('Update', array('class' => "btn btn-primary btn-sm active pull-right")) }}
     {{ Form::close() }}
 @stop
