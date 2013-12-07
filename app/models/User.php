@@ -42,6 +42,25 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         {
             return '@' . $this->username . ' [' . $this->getFullName() . ']';
         }
+
+        public function getRoleNames()
+        {
+            $roles = array();
+            foreach ($this->roles as $role)
+                array_push($roles, (string) $role);
+
+            return $roles;
+        }
+
+        public function getRolePermissionNames()
+        {
+            $permissions = array();
+            foreach ($this->roles as $role)
+                foreach ($role->permissions as $permission)
+                    array_push($permissions, (string) $permission);
+
+            return array_unique($permissions);
+        }
 /**
 	 * The database table used by the model.
 	 *
