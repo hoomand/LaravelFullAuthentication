@@ -82,5 +82,5 @@ Route::filter('csrf', function()
 Route::filter('allowed', function($route, $request, $value)
         {
               if(!allowed($value))
-                    return Redirect::to('/');
+                    return Redirect::route('404');
         });
