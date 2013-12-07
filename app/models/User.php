@@ -28,6 +28,11 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
                 'last_name' => 'required|alpha_space'
         );
 
+        public function roles()
+        {
+            return $this->belongsToMany('Role', 'user_role');
+        }
+
         public function getFullName()
         {
             return $this->first_name . ' ' . $this->last_name;

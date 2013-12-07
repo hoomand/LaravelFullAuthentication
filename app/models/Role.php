@@ -21,6 +21,11 @@ class Role extends BaseModel {
             return $this->belongsToMany('Permission', 'role_permission');
         }
 
+        public function users()
+        {
+            return $this->belongsToMany('User', 'user_role');
+        }
+
 
         protected $table = 'role';
 
