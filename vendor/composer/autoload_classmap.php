@@ -22,6 +22,7 @@ return array(
     'CreatePermissionsTable' => $baseDir . '/app/database/migrations/2013_12_02_101000_CreatePermissionsTable.php',
     'CreateRolePermissionTable' => $baseDir . '/app/database/migrations/2013_12_06_103011_CreateRolePermissionTable.php',
     'CreateRoleTable' => $baseDir . '/app/database/migrations/2013_12_03_083622_CreateRoleTable.php',
+    'CreateUserRoleTable' => $baseDir . '/app/database/migrations/2013_12_07_093339_CreateUserRoleTable.php',
     'CreateUserTable' => $baseDir . '/app/database/migrations/2013_11_24_120914_CreateUserTable.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Doctrine\\Common\\Annotations\\Annotation' => $vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation.php',
