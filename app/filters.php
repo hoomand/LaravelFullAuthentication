@@ -78,3 +78,9 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('allowed', function($route, $request, $value)
+        {
+              if(!allowed($value))
+                    return Redirect::to('/');
+        });
