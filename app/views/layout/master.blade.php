@@ -34,14 +34,14 @@
                     </a>
 
                     {{ HTML::link(Route('home'), 'Home') }}
-
-                    <!-- Everything you want hidden at 940px or less, place within here -->
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li><a href="{{{ URL::to('') }}}">Home</a></li>
-                            <li><a href="{{{ URL::to('secret') }}}">Secret</a></li>
-                        </ul>
-                    </div>
+                    @if ( !Auth::guest() )
+                        @if ( allowed('users_view') )
+                            {{ HTML::link(Route('user/index'), 'Users') }}
+                        @endif
+                        @if ( allowed('roles_view') )
+                            {{ HTML::link(Route('role/index'), 'Roles') }}
+                        @endif
+                    @endif
 
                     <div class="nav pull-right">
                         <ul class="nav">
