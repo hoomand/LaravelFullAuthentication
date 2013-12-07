@@ -12,6 +12,10 @@ class PermissionSeeder extends DatabaseSeeder {
                     'display' => 'edit users'
                 ),
                 array(
+                    'name' => 'users_create',
+                    'display' => 'create users'
+                ),
+                array(
                     'name' => 'users_delete',
                     'display' => 'delete users'
                 )),
