@@ -59,13 +59,13 @@ class UserController extends BaseController {
         return View::make('user.profile_edit');
     }
 
-    public function listUsers()
+    public function indexAction()
     {
         $users = User::all();
-        return View::make('user.list')->with('users',$users);
+        return View::make('user.index')->with('users',$users);
     }
 
-    public function createUser()
+    public function createAction()
     {
         if (Input::server("REQUEST_METHOD") == "POST")
         {
@@ -84,43 +84,42 @@ class UserController extends BaseController {
             $user->cellphone = Input::get('cellphone');
 
             $user->save();
-            return Redirect::route('users')->with('success', 'New user ' . $user->getFullNameWithUsername() . ' got created');
+            return Redirect::route('user/index')->with('success', 'New user ' . $user->getFullNameWithUsername() . ' got created');
         }
         return View::make('user.create');
     }
 
-    public function getEditUser($user_id)
+    public function editAction($user_id)
     {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $validation = User::validate_update(Input::all());
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            User::where('id','=',$user_id)->update(array(
+                'first_name' => Input::get('first_name'),
+                'last_name' => Input::get('last_name'),
+                'email' => Input::get('email'),
+                'phone' => Input::get('phone'),
+                'cellphone' => Input::get('cellphone'),
+                'gender' => Input::get('gender')
+            ));
+
+            return Redirect::route('user/index')->with('success', 'User info successfully updated');
+        }
         $user = User::find($user_id);
-        return View::make('user.user_edit')->with('user', $user);
-    }
-    public function postEditUser()
-    {
-        $validation = User::validate_update(Input::all());
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-
-        User::where('id','=',Input::get('id'))->update(array(
-            'first_name' => Input::get('first_name'),
-            'last_name' => Input::get('last_name'),
-            'email' => Input::get('email'),
-            'phone' => Input::get('phone'),
-            'cellphone' => Input::get('cellphone'),
-            'gender' => Input::get('gender')
-        ));
-
-        return Redirect::route('users')->with('success', 'User info info successfully updated');
-
+        return View::make('user.edit')->with('user', $user);
     }
 
-    public function deleteUser($user_id)
+    public function deleteAction($user_id)
     {
         $user = User::find($user_id);
         if (Input::server("REQUEST_METHOD") == "POST")
         {
             $user->delete();
-            return Redirect::route('users')->with('success', 'User ' . $user->getFullNameWithUsername() . ' got deleted');
+            return Redirect::route('user/index')->with('success', 'User ' . $user->getFullNameWithUsername() . ' got deleted');
         }
-        return View::make('user.user_delete')->with('user', $user);
+        return View::make('user.delete')->with('user', $user);
     }
 }

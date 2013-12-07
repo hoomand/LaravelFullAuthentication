@@ -6,7 +6,7 @@
 @stop
 
 @section('content')
-    {{ HTML::link(route('user_create'), 'Create User', array('class' => "btn btn-success btn-sm active")) }}
+    {{ HTML::link('user/create', 'Create User', array('class' => "btn btn-success btn-sm active")) }}
     <h3>Users</h3>
 
     <table class="table">
@@ -28,8 +28,8 @@
             <td>{{$user->email}}</td>
             <td>{{$user->cellphone}}</td>
             <td>
-                {{ HTML::link('user_edit/' . $user->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
-                {{ HTML::link('user_delete/' . $user->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
+                {{ HTML::link('user/edit/' . $user->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
+                {{ HTML::link('user/delete/' . $user->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
             </td>
         </tr>
         @endforeach

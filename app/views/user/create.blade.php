@@ -7,7 +7,7 @@
 
 @section('content')
     <h3>Create New User</h3>
-    {{ Form::Open(array('route' => 'user_create', 'method' => 'post')) }}
+    {{ Form::Open(array('route' => 'user/create', 'method' => 'post')) }}
     {{ Form::token() }}
     <table class="table">
          <tr>
