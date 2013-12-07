@@ -17,4 +17,9 @@ class Permission extends BaseModel {
             return $this->belongsToMany('Role', 'role_permission');
         }
 
+        public function __toString()
+        {
+            return $this->name;
+        }
+
 }

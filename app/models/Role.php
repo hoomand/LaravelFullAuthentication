@@ -37,4 +37,9 @@ class Role extends BaseModel {
             "updated_at",
             "deleted_at");
 
+        public function __toString()
+        {
+            return $this->name;
+        }
+
 }
