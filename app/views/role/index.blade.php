@@ -6,7 +6,9 @@
 @stop
 
 @section('content')
-    {{ HTML::link('role/create', 'Add Role', array('class' => "btn btn-success btn-sm active")) }}
+    @if ( allowed('roles_create') )
+        {{ HTML::link('role/create', 'Add Role', array('class' => "btn btn-success btn-sm active")) }}
+    @endif
     <h3>Roles</h3>
 
     <table class="table">
@@ -20,8 +22,12 @@
             <td>{{$role->name}}</td>
             <td>{{$role->description}}</td>
              <td>
-                {{ HTML::link('role/edit/' . $role->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
-                {{ HTML::link('role/delete/' . $role->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
+                @if ( allowed('roles_edit') )
+                    {{ HTML::link('role/edit/' . $role->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
+                @endif
+                @if ( allowed('roles_delete') )
+                    {{ HTML::link('role/delete/' . $role->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
+                @endif
             </td>
         </tr>
         @endforeach
