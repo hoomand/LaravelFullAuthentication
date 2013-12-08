@@ -61,7 +61,8 @@ class UserController extends BaseController {
 
     public function indexAction()
     {
-        $users = User::all();
+        # The first user is root and shouldn't be displayed to anyone
+        $users = User::where('id', '<>', '1')->get();
         return View::make('user.index')->with('users',$users);
     }
 
@@ -91,6 +92,10 @@ class UserController extends BaseController {
 
     public function editAction($user_id)
     {
+        # First user, root, should not be editable
+        if ($user_id == 1)
+            return Redirect::route('404');
+
         if (Input::server("REQUEST_METHOD") == "POST")
         {
             $validation = User::validate_update(Input::all());
@@ -135,6 +140,10 @@ class UserController extends BaseController {
 
     public function deleteAction($user_id)
     {
+        # First user, root, cannot be deleted
+        if ($user_id == 1)
+            return Redirect::route('404');
+
         $user = User::find($user_id);
         if (Input::server("REQUEST_METHOD") == "POST")
         {
