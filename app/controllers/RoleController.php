@@ -7,6 +7,31 @@ class RoleController extends BaseController {
         return View::make('role.index')->with('roles', Role::all());
     }
 
+    public function createAction()
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $validation = Role::validate_create(Input::all());
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            $role = new Role;
+            $role->name = Input::get('name');
+            $role->description = Input::get('description');
+            $role->save();
+
+            if (Input::has('permissions'))
+            {
+                $role->permissions()->sync(Input::get('permissions'));
+            }
+
+            return Redirect::route('role/index')->with('success', 'Role ' . $role->name . ' created');
+        }
+
+        return View::make('role.create')
+            ->with('all_permissions', Permission::all());
+    }
+
     public function editAction($role_id)
     {
         if (Input::server("REQUEST_METHOD") == "POST")
