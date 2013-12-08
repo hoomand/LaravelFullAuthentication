@@ -34,7 +34,7 @@ class PermissionSeeder extends DatabaseSeeder {
                 ),
                 array(
                     'name' => 'roles_create',
-                    'display' => 'create_roles'
+                    'display' => 'create roles'
                 )),
             'user' => array(
                 array(
