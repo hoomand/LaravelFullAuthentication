@@ -21,10 +21,10 @@ Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 
 Route::group(array("before" => "auth"), function()
     {
-        Route::get('user/profile', array('as'=>'user/profile', 'uses'=>'UserController@profileAction'));
-        Route::any('user/profile/edit', array('as'=>'user/profile/edit', 'uses'=>'UserController@editProfileAction'));
+        Route::get('user/profile', array('as'=>'user/profile', 'before' => 'allowed:profile_view', 'uses'=>'UserController@profileAction'));
+        Route::any('user/profile/edit', array('as'=>'user/profile/edit', 'before' => 'allowed:profile_edit', 'uses'=>'UserController@editProfileAction'));
 
-        Route::get('user/index', array('as'=>'user/index', 'uses'=>'UserController@indexAction'));
+        Route::get('user/index', array('as'=>'user/index', 'before' => 'allowed:users_view', 'uses'=>'UserController@indexAction'));
         Route::any('user/create', array('before' => 'allowed:users_create', 'as' => 'user/create', 'uses' => 'UserController@createAction'));
         Route::get('user/edit/{id}', array('before' => 'allowed:users_edit', 'uses' => 'UserController@editAction'))->where('id', '[0-9]+');
         Route::post('user/edit/{id}', array('before' => 'csrf|allowed:users_edit', 'uses' => 'UserController@editAction'))->where('id', '[0-9]+');
