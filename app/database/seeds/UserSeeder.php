@@ -3,12 +3,12 @@ class UserSeeder extends DatabaseSeeder {
     public function run() {
         $users = array( 
             array(
-                "username" => "sirbijan",
+                "username" => "root",
                 "password" => Hash::make('whatever123'),
-                "email" => "hoomand@gmail.com",
-                "first_name" => "Bijan",
-                "last_name" => "Hoomand",
-                "cellphone" => "+989357752066",
+                "email" => "admin@test.com",
+                "first_name" => "Admin",
+                "last_name" => "Admin",
+                "cellphone" => "",
                 "gender" => "male"
             ),
             array(
