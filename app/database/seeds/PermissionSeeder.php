@@ -19,6 +19,23 @@ class PermissionSeeder extends DatabaseSeeder {
                     'name' => 'users_delete',
                     'display' => 'delete users'
                 )),
+            'roles_management' => array(
+                array(
+                    'name' => 'roles_view',
+                    'display' => 'view roles'
+                ),
+                array(
+                    'name' => 'roles_edit',
+                    'display' => 'edit roles'
+                ),
+                array(
+                    'name' => 'roles_delete',
+                    'display' => 'delete roles'
+                ),
+                array(
+                    'name' => 'roles_create',
+                    'display' => 'create_roles'
+                )),
             'user' => array(
                 array(
                     'name' => 'profile_view',
