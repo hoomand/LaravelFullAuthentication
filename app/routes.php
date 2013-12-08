@@ -19,10 +19,6 @@ Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
 Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 
-Route::any('role/index', array('as' => 'role/index', 'uses' => 'RoleController@indexAction'));
-Route::any('role/edit/{id}', array('uses' => 'RoleController@editAction'));
-Route::any('role/edit/perms/{id}', array('uses' => 'RoleController@editPermission'));
-
 Route::group(array("before" => "auth"), function()
     {
         Route::get('user/profile', array('as'=>'user/profile', 'uses'=>'UserController@profileAction'));
@@ -34,5 +30,10 @@ Route::group(array("before" => "auth"), function()
         Route::post('user/edit/{id}', array('before' => 'csrf|allowed:users_edit', 'uses' => 'UserController@editAction'))->where('id', '[0-9]+');
         Route::post('user/edit/roles/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'UserController@editRole'))->where('id', '[0-9]+');
         Route::any('user/delete/{id}', array('before' => 'allowed:users_delete', 'uses' => 'UserController@deleteAction'))->where('id', '[0-9]+');
+
+        Route::any('role/index', array('as' => 'role/index', 'before' => 'allowed:roles_view', 'uses' => 'RoleController@indexAction'));
+        Route::get('role/edit/{id}', array('before' => 'allowed:roles_edit', 'uses' => 'RoleController@editAction'));
+        Route::post('role/edit/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'RoleController@editAction'));
+        Route::post('role/edit/perms/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'RoleController@editPermission'));
 
    });
