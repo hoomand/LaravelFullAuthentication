@@ -36,8 +36,6 @@ class Role extends BaseModel {
 
         protected $table = 'role';
 
-        protected $softDelete = true;
-
         protected $guarded = array(
             "id",
             "created_at",
