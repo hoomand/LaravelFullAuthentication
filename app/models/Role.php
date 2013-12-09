@@ -29,6 +29,7 @@ class Role extends BaseModel {
         public function delete()
         {
             $this->users()->detach();
+            $this->permissions()->detach();
             parent::delete();
         }
 
