@@ -26,6 +26,12 @@ class Role extends BaseModel {
             return $this->belongsToMany('User', 'user_role');
         }
 
+        public function delete()
+        {
+            $this->users()->detach();
+            parent::delete();
+        }
+
 
         protected $table = 'role';
 
