@@ -59,6 +59,19 @@ class RoleController extends BaseController {
             ->with('role_permission_ids', $role_permission_ids);
     }
 
+    public function deleteAction($role_id)
+    {
+        $role = Role::find($role_id);
+        if ( Input::server("REQUEST_METHOD") == "POST" )
+        {
+            $role->delete();
+            return Redirect::route('role/index')->with('success', 'role ' . $role->name . ' got deleted');
+        }
+
+        return View::make('role.delete')->with('role', $role);
+
+    }
+
     public function editPermission($role_id)
     {
         # Delete all permissions first

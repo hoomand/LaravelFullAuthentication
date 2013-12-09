@@ -36,5 +36,7 @@ Route::group(array("before" => "auth"), function()
         Route::get('role/edit/{id}', array('before' => 'allowed:roles_edit', 'uses' => 'RoleController@editAction'));
         Route::post('role/edit/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'RoleController@editAction'));
         Route::post('role/edit/perms/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'RoleController@editPermission'));
+        Route::get('role/delete/{id}', array('before' => 'allowed:roles_delete', 'uses' => 'RoleController@deleteAction'))->where('id', '[0-9]+');
+        Route::post('role/delete/{id}', array('before' => 'csrf|allowed:roles_delete', 'uses' => 'RoleController@deleteAction'))->where('id', '[0-9]+');
 
    });
