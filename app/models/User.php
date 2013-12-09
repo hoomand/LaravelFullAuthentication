@@ -61,6 +61,13 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 
             return array_unique($permissions);
         }
+
+        public function delete()
+        {
+            $this->roles()->detach();
+            parent::delete();
+        }
+
 /**
 	 * The database table used by the model.
 	 *
