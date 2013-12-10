@@ -4,6 +4,11 @@ class UserController extends BaseController {
 
     public function postLogin()
     {
+        $rules =  array('captcha' => array('required', 'captcha'));
+        $validator = Validator::make(Input::all(), $rules);
+        if ($validator->fails())
+            return Redirect::route('login')->withErrors('Entered code is incorrect');
+
 	$user = array(
 		'username' => Input::get('username'),
 		'password' => Input::get('password')
