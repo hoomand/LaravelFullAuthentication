@@ -17,11 +17,13 @@
         {{ Form::label('password', 'Password') }}<br />
         {{ Form::password('password') }}
     </p>
-    <p>
-        {{ Form::label('captcha', 'Code') }}<br />
-        {{ Form::text('captcha') }}
-    </p>
-    <p>{{ HTML::image(Captcha::img(), 'Captcha image') }}</p>
+    @if ($failedLogins > 2)
+        <p>
+            {{ Form::label('captcha', 'Code') }}<br />
+            {{ Form::text('captcha') }}
+        </p>
+        <p>{{ HTML::image(Captcha::img(), 'Captcha image') }}</p>
+    @endif
     <p>{{ Form::submit('Login') }}</p>
 
     {{ Form::close() }}

@@ -4,27 +4,40 @@ class UserController extends BaseController {
 
     public function postLogin()
     {
-        $rules =  array('captcha' => array('required', 'captcha'));
-        $validator = Validator::make(Input::all(), $rules);
-        if ($validator->fails())
-            return Redirect::route('login')->withErrors('Entered code is incorrect');
+        if (!Session::has('user.failed')) {
+            Session::put('user.failed', '1');
+        } else {
+            $failedLogins = (int) Session::get('user.failed');
+            $failedLogins += 1;
+            Session::put('user.failed', $failedLogins);
+        }
 
-	$user = array(
-		'username' => Input::get('username'),
-		'password' => Input::get('password')
-	);
+        if ( Session::get('user.failed') > 3 )
+        {
+            $rules =  array('captcha' => array('required', 'captcha'));
+            $validator = Validator::make(Input::all(), $rules);
+            if ($validator->fails())
+                return Redirect::route('login')->withErrors('Entered code is incorrect');
+        }
 
-	if (Auth::attempt($user)) {
-		return Redirect::route('home')->with('success', 'You are logged in');
-	} else {
-		return Redirect::route('login')
-			->withErrors('Your credentials are incorrect')
-			->withInput();
-	}
+        $user = array(
+            'username' => Input::get('username'),
+            'password' => Input::get('password')
+        );
+
+        if (Auth::attempt($user)) {
+            Session::put('user.failed', '0');
+            return Redirect::route('home')->with('success', 'You are logged in');
+        } else {
+            return Redirect::route('login')
+                ->withErrors('Your credentials are incorrect')
+                ->with('failedLogins', Session::get('user.failed'))
+                ->withInput();
+        }
     }
     public function getLogin()
     {
-	return View::make('user.login');
+	return View::make('user.login')->with('failedLogins', Session::get('user.failed', 0));
     }
 
     public function getLogout()
