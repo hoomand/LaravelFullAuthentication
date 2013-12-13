@@ -48,6 +48,26 @@ class UserController extends BaseController {
         }
     }
 
+    public function requestAction()
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $rules = array("email" => "required");
+            $validation = Validator::make(Input::all(), $rules);
+
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            $credentials = array('email' => Input::get('email'));
+
+            Password::remind($credentials);
+
+            return Redirect::back()->with('success', 'email was successfully sent');
+        }
+
+        return View::make("user.request");
+    }
+
     public function profileAction()
     {
         return View::make('user.profile.index');
