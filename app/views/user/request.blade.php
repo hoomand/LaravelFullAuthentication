@@ -7,7 +7,7 @@
 
 @section('content')
     <h3>Password Reset Request</h3>
-    {{ Form::open(array('route' => 'user/request', 'method' => 'POST')) }}
+    {{ Form::open(array('route' => 'password/request', 'method' => 'POST')) }}
     {{ Form::token() }}
     <table class="table table-condensed" style="width: 40%">
         <tr>

@@ -5,9 +5,10 @@
 	</head>
 	<body>
 		<h2>Password Reset</h2>
-
-		<div>
-			To reset your password, complete this form: {{ URL::route('user/reset' . "?token=" . $token) }}.
-		</div>
+                <p>
+                You requested to reset your password. Please follow the link to do so:
+                <br />
+                {{ URL::to('password/reset', array($token)) }}
+                </p>
 	</body>
 </html>

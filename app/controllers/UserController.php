@@ -60,7 +60,13 @@ class UserController extends BaseController {
 
             $credentials = array('email' => Input::get('email'));
 
-            Password::remind($credentials);
+            Password::remind(
+                $credentials,
+                function ($message, $user) {
+                    $message->from("info@rasla.com");
+                    $message->subject("Password Reset");
+                }
+            );
 
             return Redirect::back()->with('success', 'email was successfully sent');
         }
