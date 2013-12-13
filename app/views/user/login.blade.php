@@ -24,7 +24,8 @@
         </p>
         <p>{{ HTML::image(Captcha::img(), 'Captcha image') }}</p>
     @endif
-    <p>{{ Form::submit('Login') }}</p>
-
+    {{ Form::submit('Login') }}
+    <br />
+    {{ HTML::link('password/request', 'Forgot Password?', array('class' => "btn btn-link")) }}
     {{ Form::close() }}
 @stop
