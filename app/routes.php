@@ -16,8 +16,8 @@ Route::get('styles', array('as' => 'styles', 'uses' => 'HomeController@showStyle
 Route::get('404', array('as' => '404', 'uses' => 'HomeController@show404'));
 
 Route::get('login', array('as'=>'login', 'uses'=>'UserController@getLogin'));
-Route::any('request', array('as'=>'user/request', 'uses'=>'UserController@requestAction'));
-Route::any('reset', array('as'=>'user/reset', 'uses'=>'UserController@resetAction'));
+Route::any('password/request', array('as'=>'password/request', 'uses'=>'UserController@requestAction'));
+Route::any('password/reset/{token}', array('as'=>'password/reset', 'uses'=>'UserController@resetAction'));
 Route::post('login', array('before'=>'csrf', 'uses'=>'UserController@postLogin'));
 Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 

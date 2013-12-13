@@ -7,7 +7,7 @@
 
 @section('content')
     <h2>Password Reset</h2>
-    {{ Form::open(array('url' => URL::route('user/reset') . $token, 'method' => 'POST')) }}
+    {{ Form::open(array('route' => array('password/reset', $token), 'method' => 'POST')) }}
     {{ Form::token() }}
     <p>
         {{ Form::label('email', 'Email') }}<br />
@@ -22,7 +22,8 @@
         {{ Form::password('password_confirmation') }}
     </p>
 
-    <p>{{ Form::submit('Reset') }}</p>
+    <p>{{ Form::submit('Login') }}</p>
+    {{ Form::hidden('token', $token) }}
 
     {{ Form::close() }}
 @stop

@@ -74,6 +74,33 @@ class UserController extends BaseController {
         return View::make("user.request");
     }
 
+    public function resetAction($token)
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $rules = array(
+                "email" => "required|email",
+                "password" => "required|min:6",
+                "password_confirmation" => "same:password",
+                "token" => "exists:token,token"
+            );
+            $validation = Validator::make(Input::all(), $rules);
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation)->withInput();
+
+            $credentials = array('email' => Input::get('email'));
+            return Password::reset(
+                $credentials,
+                function($user, $password) {
+                    $user->password = Hash::make($password);
+                    $user->save();
+                    return Redirect::to('login')->with('success', 'Your password has been reset');
+                });
+        }
+
+        return View::make('user.reset')->with('token', $token);
+    }
+
     public function profileAction()
     {
         return View::make('user.profile.index');
