@@ -46,8 +46,8 @@ class PermissionSeeder extends DatabaseSeeder {
                     'display' => 'edit profile'
                 ),
                 array(
-                    'name' => 'password_edit',
-                    'display' => 'edit password'
+                    'name' => 'profile_edit_password',
+                    'display' => "edit one's own password"
                 ))
             );
 

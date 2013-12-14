@@ -130,6 +130,29 @@ class UserController extends BaseController {
         return View::make('user.profile.edit');
     }
 
+    public function editProfilePasswordAction()
+    {
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $rules = array(
+                "password" => "required|min:6|confirmed",
+                "password_confirmation" => "required|min:6"
+            );
+
+            $validation = Validator::make(Input::all(), $rules);
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation);
+
+            User::where('id', '=', Auth::user()->id)->update(array(
+                'password' => Hash::make(Input::get('password'))
+            ));
+
+            return Redirect::route('user/profile')->with('success', 'Password successfully updated');
+        }
+
+        return View::make('user.profile.password');
+    }
+
     public function indexAction()
     {
         # The first user is root and shouldn't be displayed to anyone

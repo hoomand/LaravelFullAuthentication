@@ -24,6 +24,7 @@ Route::get('logout', array('as'=>'logout', 'uses'=>'UserController@getLogout'));
 Route::group(array("before" => "auth"), function()
     {
         Route::get('user/profile', array('as'=>'user/profile', 'before' => 'allowed:profile_view', 'uses'=>'UserController@profileAction'));
+        Route::any('user/profile/edit/password', array('as'=>'user.profile.edit.password', 'before' => 'allowed:profile_edit_password', 'uses'=>'UserController@editProfilePasswordAction'));
         Route::any('user/profile/edit', array('as'=>'user/profile/edit', 'before' => 'allowed:profile_edit', 'uses'=>'UserController@editProfileAction'));
 
         Route::get('user/index', array('as'=>'user/index', 'before' => 'allowed:users_view', 'uses'=>'UserController@indexAction'));
