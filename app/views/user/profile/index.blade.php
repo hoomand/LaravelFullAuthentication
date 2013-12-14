@@ -31,6 +31,6 @@
 
     </table>
     @if ( allowed('profile_edit') )
-        {{ HTML::link(route('user/profile/edit'), 'Edit Profile', array('class' => "btn btn-primary btn-sm active")) }}
+        {{ HTML::link(route('user/profile/edit'), 'Edit Profile', array('class' => "btn btn-primary btn-sm active pull-right")) }}
     @endif
 @stop
