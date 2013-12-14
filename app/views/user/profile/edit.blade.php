@@ -6,7 +6,6 @@
 @stop
 
 @section('content')
-    {{ HTML::link(route('user.profile.edit.password'), 'Change Password', array('class' => "btn btn-success btn-sm active")) }}
     <h3>{{ Auth::user()->username }}</h3>
     
     {{ Form::Open(array('route' => 'user/profile/edit', 'method' => 'post')) }}

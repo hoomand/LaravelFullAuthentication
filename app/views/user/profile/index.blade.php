@@ -33,4 +33,7 @@
     @if ( allowed('profile_edit') )
         {{ HTML::link(route('user/profile/edit'), 'Edit Profile', array('class' => "btn btn-primary btn-sm active pull-right")) }}
     @endif
+    @if ( allowed('profile_edit_password') )
+        {{ HTML::link(route('user.profile.edit.password'), 'Change Password', array('class' => "btn btn-primary btn-sm active pull-right")) }}
+    @endif
 @stop
