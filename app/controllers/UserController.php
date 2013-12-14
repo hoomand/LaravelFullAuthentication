@@ -153,6 +153,33 @@ class UserController extends BaseController {
         return View::make('user.profile.password');
     }
 
+    public function editPasswordAction($user_id)
+    {
+        # First user, root, should not be editable
+        if ($user_id == 1)
+            return Redirect::route('404');
+
+        if (Input::server("REQUEST_METHOD") == "POST")
+        {
+            $rules = array(
+                "password" => "required|min:6|confirmed",
+                "password_confirmation" => "required|min:6"
+            );
+
+            $validation = Validator::make(Input::all(), $rules);
+            if ($validation->fails())
+                return Redirect::back()->withErrors($validation);
+
+            User::where('id', '=', $user_id)->update(array(
+                'password' => Hash::make(Input::get('password'))
+            ));
+
+            return Redirect::route('user/index')->with('success', 'Password successfully updated');
+        }
+
+        return View::make('user.password')->with('user', User::find($user_id));
+    }
+
     public function indexAction()
     {
         # The first user is root and shouldn't be displayed to anyone
