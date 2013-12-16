@@ -1,0 +1,29 @@
+language: php
+
+php: [5.3, 5.4, 5.5]
+
+env:
+  - WEBDRIVER=selenium
+  - WEBDRIVER=phantomjs
+
+matrix:
+  allow_failures:
+    - env: 'WEBDRIVER=phantomjs'
+
+before_script:
+  - export WEB_FIXTURES_HOST=http://localhost
+  - export WEB_FIXTURES_BROWSER=firefox
+
+  - sh bin/run-"$WEBDRIVER".sh
+
+  - composer install --prefer-source
+
+  - sudo apt-get update > /dev/null
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 > /dev/null
+  - sudo sed -i -e "s,/var/www,$(pwd)/vendor/behat/mink/tests/Behat/Mink/Driver/web-fixtures,g" /etc/apache2/sites-available/default
+  - sudo /etc/init.d/apache2 restart
+
+script: phpunit -v
+
+after_failure:
+  - cat /tmp/webdriver_output.txt

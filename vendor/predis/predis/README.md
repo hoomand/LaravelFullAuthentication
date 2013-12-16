@@ -49,18 +49,17 @@ managed using Composer, but you can also leverage its own autoloader if you are 
 project or script without any PSR-0 compliant autoloading facility:
 
 ```php
-<?php
-// prepend a base path if Predis is not available in your "include_path".
+// Prepend a base path if Predis is not available in your "include_path".
 require 'Predis/Autoloader.php';
 
 Predis\Autoloader::register();
 ```
 
 It is also possible to create a [phar](http://www.php.net/manual/en/intro.phar.php) archive from the
-repository just by launching `bin/create-phar.php`. The generated phar ships with a stub defining an
+repository just by launching `bin/create-phar`. The generated phar contains a stub that defines an
 autoloader function for Predis, so you just need to require the phar to start using the library.
 Alternatively it is possible to generate one single PHP file holding every class like older versions
-of Predis by launching `bin/create-single-file.php`, but this practice __is not__ encouraged.
+of Predis by launching `bin/create-single-file`, but this practice __is not__ encouraged.
 
 
 ### Connecting to Redis ###
@@ -109,7 +108,7 @@ it is recommended to refer to their specific documentation for details.
 
 Various aspects of the client can be easily configured by passing options to the second argument of
 `Predis\Client::__construct()`. Options are managed using a mini DI-alike container and their values
-are usually lazily initialized only when needed. Predis by defaults supports the following options:
+are usually lazily initialized only when needed. Predis by default supports the following options:
 
   - `profile`: which profile to use in order to match a specific version of Redis.
   - `prefix`: a prefix string that is automatically applied to keys found in commands.
