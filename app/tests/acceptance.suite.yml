@@ -15,4 +15,4 @@ modules:
         - WebHelper
     config:
         PhpBrowser:
-            url: 'http://rasla.com'
+            url: 'http://localhost:8888'
