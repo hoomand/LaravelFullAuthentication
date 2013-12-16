@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => null, 'name' => null),
+	'from' => array('address' => 'rasla@rasla.com', 'name' => 'Rasla Raslafarian'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'postmaster@sandbox7508.mailgun.org',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' => 'whatever123',
 
 	/*
 	|--------------------------------------------------------------------------
