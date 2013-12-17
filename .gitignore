@@ -9,4 +9,4 @@ tags
 /app/config/database.php
 .idea/*
 app/tests/_log/
-app/tests/_data/
+app/tests/_data/dump.sql
