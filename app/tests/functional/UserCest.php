@@ -33,4 +33,10 @@ class UserCest
         ));
     }
 
+    public function seeLoginPage(TestGuy $I) {
+
+        $I->wantTo('see the login page');
+        $I->amOnPage('/login');
+        $I->see('Login','h2');
+    }
 }
