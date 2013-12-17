@@ -2,4 +2,4 @@
 $I = new WebGuy($scenario);
 $I->wantTo('do a simple login');
 $I->amOnPage('/login');
-$I->see('Login');
+$I->see('Login', '.container h2');
