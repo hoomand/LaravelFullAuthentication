@@ -39,4 +39,15 @@ class UserCest
         $I->amOnPage('/login');
         $I->see('Login','h2');
     }
+
+    public function successfulLoginAsRoot(TestGuy $I) {
+        $I->wantTo('successfully login as root');
+        $I->fillField('#username', 'root');
+        $I->fillField('#password', 'whatever123');
+        $I->click('#login');
+        $I->seeCurrentUrlEquals('/');
+
+    }
+
+
 }
