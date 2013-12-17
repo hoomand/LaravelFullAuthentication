@@ -30,7 +30,7 @@
         <tr>
             <td colspan="2">
                 {{ HTML::link('password/request', 'Forgot Password?', array('class' => "btn btn-info btn-sm active pull-right")) }}
-                {{ Form::submit('Login', array('class' => "btn btn-primary btn-sm active pull-right")) }}
+                {{ Form::submit('Login', array('id' => 'login', 'class' => "btn btn-primary btn-sm active pull-right")) }}
             </td>
         </tr>
 
