@@ -5,6 +5,7 @@ composer.lock
 Thumbs.db
 *.swp
 *.swo
+tags
 /app/config/database.php
 .idea/*
 app/tests/_log/
