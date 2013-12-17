@@ -22,8 +22,15 @@ class UserCest
     }
 
     // tests
-    public function tryToTest(TestGuy $I) {
-    
+    public function addUserDirectlyThroughModel(TestGuy $I) {
+        // We check the user we added in _before() does exist
+        $I->seeInDatabase('user', array(
+            'username' => 'mandali',
+            'first_name' => 'Mohammad',
+            'last_name' => 'Nad Ali',
+            'email' => 'mandali@mandalestan.com',
+            'phone' => '44882233'
+        ));
     }
 
 }
