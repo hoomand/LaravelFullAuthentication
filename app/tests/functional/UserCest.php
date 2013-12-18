@@ -46,6 +46,53 @@ class UserCest
         $I->fillField('#password', 'whatever123');
         $I->click('#login');
         $I->seeCurrentUrlEquals('/');
+        $I->see('Success', 'h4');
+        $I->see('You are logged in');
+    }
+
+    public function checkUserRootCanSeeUsersLink(TestGuy $I) {
+        $I->wantTo('make sure user root can see the Users link on the home page');
+        # Login as root
+        $I->amLoggedAs(User::find(1));
+
+        $I->amOnPage('/');
+        $I->see('Users', 'a[href$="user/index"]');
+    }
+
+    public function checkUserRootCanCreateNewUser(TestGuy $I) {
+        $I->wantTo('make sure user root can create new user');
+        # Login as root
+        $I->amLoggedAs(User::find(1));
+
+        $I->amOnPage('/user/index');
+        $I->click('Create User', '.container a[href$="user/create"]');
+        $I->see('Create New User', '.container h3');
+
+        $username = 'testuser';
+        $firstname = 'test';
+        $lastname = 'test';
+        $password = 'testpass';
+        $email = 'test@example.com';
+
+        $I->fillField('#username', $username);
+        $I->fillField('#first_name', $firstname);
+        $I->fillField('#last_name', $lastname);
+        $I->fillField('#password', $password);
+        $I->fillField('#password_confirmation', $password);
+        $I->selectOption('#female','female');
+        $I->fillField('#email', $email);
+        $I->fillField('#phone', '11223344');
+        $I->fillField('#cellphone', '09127752066');
+        $I->click('#saveuser');
+        $I->seeCurrentUrlEquals('/user/index');
+        $I->see('Success', 'h4');
+        $I->see("@$username [$firstname $lastname]");
+        $I->seeInDatabase('user', array(
+            'username' => $username,
+            'first_name' => $firstname,
+            'last_name' => $lastname,
+            'email' => $email,
+        ));
 
     }
 
