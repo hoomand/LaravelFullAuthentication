@@ -42,6 +42,6 @@
              <td>{{ Form::text('cellphone', '', array('class' => 'form-control')) }}</td>
         </tr>
     </table>
-    {{ Form::submit('Save', array('class' => "btn btn-primary btn-sm active pull-right")) }}
+    {{ Form::submit('Save', array('id' => 'saveuser', 'class' => "btn btn-primary btn-sm active pull-right")) }}
     {{ Form::close() }}
 @stop
