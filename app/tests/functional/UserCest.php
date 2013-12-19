@@ -64,15 +64,13 @@ class UserCest
         $I->see('Users', 'a[href$="user/index"]');
     }
 
-    public function checkUserRootCanCreateNewUser(TestGuy $I) {
-        $I->wantTo('make sure user root can create new user');
-        # Login as root
-        $I->amLoggedAs(User::find(1));
+    public function checkUserRootCanManageUsers(TestGuy $I) {
 
+        $I->wantTo('make sure user root can create new user');
+        $I->amLoggedAs(User::find(1));
         $I->amOnPage('/user/index');
         $I->click('Create User', '.container a[href$="user/create"]');
         $I->see('Create New User', '.container h3');
-
         $I->fillField('#username', $this->username);
         $I->fillField('#first_name', $this->firstname);
         $I->fillField('#last_name', $this->lastname);
