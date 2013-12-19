@@ -93,7 +93,15 @@ class UserCest
             'email' => $this->email,
         ));
 
-    }
+        $I->wantTo('make sure user root can edit the newly created user in the previous step');
+        $I->amLoggedAs(User::find(1));
 
+        $I->amOnPage('/user/index');
+        $I->see($this->username);
+        $I->click('#edit_button_' . $this->username);
+
+
+
+    }
 
 }
