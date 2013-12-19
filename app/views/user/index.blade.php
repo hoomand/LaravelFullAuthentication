@@ -31,7 +31,7 @@
             <td>{{$user->cellphone}}</td>
             <td>
                 @if ( allowed('users_edit') )
-                    {{ HTML::link('user/edit/' . $user->id, 'Edit', array('class' => "btn btn-primary btn-sm active")) }}
+                {{ HTML::link('user/edit/' . $user->id, 'Edit', array('id' => 'edit_button_' . $user->username, 'class' => "btn btn-primary btn-sm active")) }}
                 @endif
                 @if ( allowed('users_delete') )
                     {{ HTML::link('user/delete/' . $user->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
