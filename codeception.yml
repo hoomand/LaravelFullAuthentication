@@ -9,6 +9,16 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
+coverage:
+    enabled: true
+    include:
+        - app/*
+    exclude:
+        - app/storage/*
+        - app/tests/*
+        - app/database/*
+        - app/lang/*
+        - app/config/*
 modules:
     config:
         Db:
