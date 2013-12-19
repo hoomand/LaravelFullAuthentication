@@ -3,6 +3,11 @@ use \TestGuy;
 
 class UserCest
 {
+    public $username = 'testuser';
+    public $firstname = 'test';
+    public $lastname = 'test';
+    public $password = 'testpass';
+    public $email = 'test@example.com';
 
     public function _before()
     {
@@ -68,30 +73,24 @@ class UserCest
         $I->click('Create User', '.container a[href$="user/create"]');
         $I->see('Create New User', '.container h3');
 
-        $username = 'testuser';
-        $firstname = 'test';
-        $lastname = 'test';
-        $password = 'testpass';
-        $email = 'test@example.com';
-
-        $I->fillField('#username', $username);
-        $I->fillField('#first_name', $firstname);
-        $I->fillField('#last_name', $lastname);
-        $I->fillField('#password', $password);
-        $I->fillField('#password_confirmation', $password);
+        $I->fillField('#username', $this->username);
+        $I->fillField('#first_name', $this->firstname);
+        $I->fillField('#last_name', $this->lastname);
+        $I->fillField('#password', $this->password);
+        $I->fillField('#password_confirmation', $this->password);
         $I->selectOption('#female','female');
-        $I->fillField('#email', $email);
+        $I->fillField('#email', $this->email);
         $I->fillField('#phone', '11223344');
         $I->fillField('#cellphone', '09127752066');
         $I->click('#saveuser');
         $I->seeCurrentUrlEquals('/user/index');
         $I->see('Success', 'h4');
-        $I->see("@$username [$firstname $lastname]");
+        $I->see("@$this->username [$this->firstname $this->lastname]");
         $I->seeInDatabase('user', array(
-            'username' => $username,
-            'first_name' => $firstname,
-            'last_name' => $lastname,
-            'email' => $email,
+            'username' => $this->username,
+            'first_name' => $this->firstname,
+            'last_name' => $this->lastname,
+            'email' => $this->email,
         ));
 
     }
