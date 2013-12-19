@@ -91,12 +91,31 @@ class UserCest
             'email' => $this->email,
         ));
 
+
         $I->wantTo('make sure user root can edit the newly created user in the previous step');
         $I->amLoggedAs(User::find(1));
-
         $I->amOnPage('/user/index');
         $I->see($this->username);
         $I->click('#edit_button_' . $this->username);
+        $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
+        $I->see('Editing', 'h3');
+        $I->see($this->username, '.text-info');
+        $I->fillField("#first_name", $this->firstname . 'edited');
+        $I->fillField('#last_name', $this->lastname . 'edited');
+        $I->selectOption('#male','male');
+        $I->fillField('#email', 'blah@blah.com');
+        $I->fillField('#phone', '666666');
+        $I->fillField('#cellphone', '09357752066');
+        $I->click('#edit_user_form input[type=submit]');
+        $I->see('Success', 'h4');
+        $I->see('User info successfully updated');
+        $I->seeCurrentUrlEquals('/user/index');
+        $I->seeInDatabase('user', array(
+            'username' => $this->username,
+            'first_name' => $this->firstname . 'edited',
+            'last_name' => $this->lastname . 'edited',
+            'email' => 'blah@blah.com',
+        ));
 
 
 
