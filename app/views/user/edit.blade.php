@@ -8,7 +8,7 @@
 @section('content')
     <h3>Editing <span class="text-info">{{ $user->username }}</span></h3>
     
-    {{ Form::Open(array('user/edit/' . $user->id, 'method' => 'post')) }}
+    {{ Form::Open(array('route' => array('user.edit', $user->id), 'method' => 'post', 'id' => 'edit_user_form')) }}
     {{ Form::token() }}
     <table class="table">
         <tr>
