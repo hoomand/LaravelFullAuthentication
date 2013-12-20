@@ -3,6 +3,7 @@ modules:
     enabled:
         - SeleniumHelper
         - Selenium2
+        - Db
     config:
         Selenium2:
             url: 'http://localhost:8888'
