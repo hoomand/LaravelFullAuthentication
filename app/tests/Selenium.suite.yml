@@ -1,3 +1,11 @@
 class_name: SeleniumGuy
 modules:
-    enabled: [SeleniumHelper]
+    enabled:
+        - SeleniumHelper
+        - Selenium2
+    config:
+        Selenium2:
+            url: 'http://localhost:8000'
+            browser: firefox
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'
