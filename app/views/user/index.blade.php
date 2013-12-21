@@ -34,7 +34,7 @@
                 {{ HTML::link('user/edit/' . $user->id, 'Edit', array('id' => 'edit_button_' . $user->username, 'class' => "btn btn-primary btn-sm active")) }}
                 @endif
                 @if ( allowed('users_delete') )
-                    {{ HTML::link('user/delete/' . $user->id, 'Delete', array('class' => "btn btn-danger btn-sm active")) }}
+                {{ HTML::link('user/delete/' . $user->id, 'Delete', array('id' => 'delete_button_' . $user->username,'class' => "btn btn-danger btn-sm active")) }}
                 @endif
                 @if ( allowed('users_edit_password') )
                     {{ HTML::link('user/edit/password/' . $user->id, 'Change Password', array('class' => "btn btn-primary btn-sm active")) }}
