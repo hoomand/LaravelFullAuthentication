@@ -64,6 +64,36 @@ class UserCest
         $I->see('Users', 'a[href$="user/index"]');
     }
 
+    public function rootCanEditProfile(TestGuy $I) {
+        $I->am('root');
+        $I->wantTo('see if root can edit his profile');
+        $I->amLoggedAs(User::find(1));
+        $I->click('root');
+        $I->see('root', '.container h3');
+        $I->see('First Name');
+        $I->see('Last Name');
+        $I->see('Gender');
+        $I->see('Email');
+        $I->see('Phone');
+        $I->see('Cell Phone');
+        $I->seeLink('Change Password');
+        $I->seeLink('Edit Profile');
+        $I->click('Edit Profile');
+        $I->seeCurrentUrlEquals('/user/profile/edit');
+
+        $I->fillField('#first_name', 'mamali');
+        $I->fillField('#last_name', 'shangooli');
+        $I->fillField('#email', 'blah@blah.com');
+        $I->fillField('#phone', '7799');
+        $I->fillField('#cellphone', '7788');
+        $I->selectOption('#female','female');
+        $I->click("Update");
+
+        $I->seeCurrentUrlEquals('/user/profile');
+        $I->see('Success', 'h4');
+        $I->see('Profile info successfully updated');
+    }
+
     public function checkUserRootCanManageUsers(TestGuy $I) {
 
         $I->wantTo('make sure user root can create new user');
@@ -142,7 +172,6 @@ class UserCest
         $I->seeLink('Logout', '/logout');
         $I->click('Logout');
     }
-
 
 
 }
