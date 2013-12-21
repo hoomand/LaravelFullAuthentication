@@ -118,6 +118,22 @@ class UserCest
         ));
 
 
+        $I->wantTo('check if root can delete the created user in the previous step');
+        $I->amLoggedAs(User::find(1));
+        $I->amOnPage('/user/index');
+        $I->see($this->username);
+        $I->click('#delete_button_' . $this->username);
+        $I->seeCurrentUrlMatches('~/user/delete/(\d+)$~');
+        $I->see('Deleting User');
+        $I->seeLink('No', '/user/index');
+        $I->click('#delete_user_form input[type=submit]');
+        $I->seeCurrentUrlEquals('/user/index');
+        $I->dontSeeInDatabase('user', array(
+            'username' => $this->username
+        ));
+
+
+
 
     }
 
