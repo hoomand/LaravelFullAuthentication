@@ -17,7 +17,7 @@ $I->seeLink('root', '/user/profile');
 $I->seeLink('Users', '/user/index');
 $I->seeLink('Roles', '/role/index');
 
-$I->click('root','.nav');
+$I->click('root');
 $I->see('root', '.container h3');
 $I->see('First Name', '.table tbody tr th');
 $I->see('Last Name', '.table tbody tr th');
