@@ -46,6 +46,7 @@ class UserController extends BaseController {
 		Auth::logout();
 		return Redirect::route('login')->with('success', 'You have just logged out');
         }
+        return  Redirect::route('home');
     }
 
     public function requestAction()
