@@ -34,11 +34,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Rasla</a>
+                {{ HTML::link(Route('home'), 'Rasla' ,array("class"=>"navbar-brand")) }}
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"> {{ HTML::link(Route('home'), 'Home') }}</li>
+<!--                    <li class="active"> {{ HTML::link(Route('home'), 'Home') }}</li>-->
                     @if ( !Auth::guest() )
                     @if ( allowed('users_view') )
                     <li>{{ HTML::link(Route('user/index'), 'Users') }}</li>
