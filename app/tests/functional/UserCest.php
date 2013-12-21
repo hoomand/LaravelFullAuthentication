@@ -132,9 +132,17 @@ class UserCest
             'username' => $this->username
         ));
 
-
-
-
     }
+
+    public function logout(TestGuy $I) {
+        $I->am('root');
+        $I->amLoggedAs(User::find(1));
+        $I->wantTo('logout');
+        $I->amOnPage('/');
+        $I->seeLink('Logout', '/logout');
+        $I->click('Logout');
+    }
+
+
 
 }
