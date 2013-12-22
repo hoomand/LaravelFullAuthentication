@@ -1,5 +1,9 @@
 <?php
+/**
+ * @group root
+ */
 use \TestGuy;
+use \Codeception\Util\Stub as Stub;
 
 class UserCest
 {
@@ -7,35 +11,54 @@ class UserCest
     public $firstname = 'test';
     public $lastname = 'test';
     public $password = 'testpass';
+    public $phone = '445566';
     public $email = 'test@example.com';
+
+    private static $users;
+    private $persisted_user;
+
+    static function init_static()
+    {
+        self::$users = array(
+            'ghelgheli' => Stub::make('User', array(
+                'username' => 'ghelgheli',
+                'first_name' => 'ghelgheli',
+                'last_name' => 'ghelghelizade',
+                'password' => Hash::make('ghelgheli'),
+                'email' => 'ghelghel@ghelghelian.com',
+                'phone' => '445566',
+                'cellphone' => '09125126044'
+            )),
+        );
+
+    }
 
     public function _before()
     {
-        $user = new User;
-        $user->username = "mandali";
-        $user->first_name = "Mohammad";
-        $user->last_name = "Nad Ali";
-        $user->password = Hash::make('ohlala');
-        $user->email = "mandali@mandalestan.com";
-        $user->phone = "44882233";
 
-        $user->save();
+        /*
+         * felfeli would be persisted in the database here
+         * Note: A property defined in _before is not accessible
+         * in other methods. A property defined in other methods
+         * is accessible in _before(), but doesn't feel right! I
+         * instantiated persisted_user in another method and got
+         * no error when I tried to save it in here, but I didn't
+         * see it in the database, even though a test to see it
+         * in the db worked, but somehow it didn't feel right.
+         */
+        $this->persisted_user = new User;
+        $this->persisted_user->username = 'felfeli';
+        $this->persisted_user->password = Hash::make('felfeli');
+        $this->persisted_user->first_name = 'felfel';
+        $this->persisted_user->last_name = 'felfelizade';
+        $this->persisted_user->email = 'felfel@felfeligan.com';
+
+        $this->persisted_user->save();
     }
 
     public function _after()
     {
-    }
-
-    // tests
-    public function addUserDirectlyThroughModel(TestGuy $I) {
-        // We check the user we added in _before() does exist
-        $I->seeInDatabase('user', array(
-            'username' => 'mandali',
-            'first_name' => 'Mohammad',
-            'last_name' => 'Nad Ali',
-            'email' => 'mandali@mandalestan.com',
-            'phone' => '44882233'
-        ));
+        $this->persisted_user->delete();
     }
 
     public function seeLoginPage(TestGuy $I) {
@@ -81,12 +104,12 @@ class UserCest
         $I->click('Edit Profile');
         $I->seeCurrentUrlEquals('/user/profile/edit');
 
-        $I->fillField('#first_name', 'mamali');
-        $I->fillField('#last_name', 'shangooli');
-        $I->fillField('#email', 'blah@blah.com');
-        $I->fillField('#phone', '7799');
-        $I->fillField('#cellphone', '7788');
-        $I->selectOption('#female','female');
+        $I->fillField('#first_name', self::$users['ghelgheli']->first_name);
+        $I->fillField('#last_name', self::$users['ghelgheli']->last_name);
+        $I->fillField('#email', self::$users['ghelgheli']->email);
+        $I->fillField('#phone', self::$users['ghelgheli']->phone);
+        $I->fillField('#cellphone', self::$users['ghelgheli']->cellphone);
+        $I->selectOption('#female', 'female');
         $I->click("Update");
 
         $I->seeCurrentUrlEquals('/user/profile');
@@ -94,44 +117,57 @@ class UserCest
         $I->see('Profile info successfully updated');
     }
 
-    public function checkUserRootCanManageUsers(TestGuy $I) {
+    public function checkUserRootCanAddUser(TestGuy $I) {
 
         $I->wantTo('make sure user root can create new user');
         $I->amLoggedAs(User::find(1));
         $I->amOnPage('/user/index');
         $I->click('Create User', '.container a[href$="user/create"]');
         $I->see('Create New User', '.container h3');
-        $I->fillField('#username', $this->username);
-        $I->fillField('#first_name', $this->firstname);
-        $I->fillField('#last_name', $this->lastname);
-        $I->fillField('#password', $this->password);
-        $I->fillField('#password_confirmation', $this->password);
+        $I->fillField('#username', self::$users['ghelgheli']->username);
+        $I->fillField('#first_name', self::$users['ghelgheli']->first_name);
+        $I->fillField('#last_name', self::$users['ghelgheli']->last_name);
+        $I->fillField('#password', self::$users['ghelgheli']->password);
+        $I->fillField('#password_confirmation', self::$users['ghelgheli']->password);
         $I->selectOption('#female','female');
-        $I->fillField('#email', $this->email);
-        $I->fillField('#phone', '11223344');
-        $I->fillField('#cellphone', '09127752066');
+        $I->fillField('#email', self::$users['ghelgheli']->email);
+        $I->fillField('#phone', self::$users['ghelgheli']->phone);
+        $I->fillField('#cellphone', self::$users['ghelgheli']->cellphone);
         $I->click('#saveuser');
         $I->seeCurrentUrlEquals('/user/index');
         $I->see('Success', 'h4');
-        $I->see("@$this->username [$this->firstname $this->lastname]");
+        $I->see("@" . self::$users['ghelgheli']->username . " [" . self::$users['ghelgheli']->first_name . " " . self::$users['ghelgheli']->last_name . "]");
         $I->seeInDatabase('user', array(
-            'username' => $this->username,
-            'first_name' => $this->firstname,
-            'last_name' => $this->lastname,
-            'email' => $this->email,
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->first_name,
+            'last_name' => self::$users['ghelgheli']->last_name,
+            'email' => self::$users['ghelgheli']->email,
+        ));
+    }
+
+    public function checkUserRootCanEditUser(TestGuy $I) {
+        $I->wantTo('make sure user root can edit the newly created user in the previous step');
+        $I->amLoggedAs(User::find(1));
+        $I->haveInDatabase('user', array(
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname,
+            'last_name' => self::$users['ghelgheli']->lastname,
+            'email' => self::$users['ghelgheli']->email,
+            'password' => Hash::make(self::$users['ghelgheli']->password),
+            'phone' => self::$users['ghelgheli']->phone,
+            'cellphone' => self::$users['ghelgheli']->cellphone,
+            'email' => self::$users['ghelgheli']->email
         ));
 
 
-        $I->wantTo('make sure user root can edit the newly created user in the previous step');
-        $I->amLoggedAs(User::find(1));
         $I->amOnPage('/user/index');
-        $I->see($this->username);
-        $I->click('#edit_button_' . $this->username);
+        $I->see(self::$users['ghelgheli']->username);
+        $I->click('#edit_button_' . self::$users['ghelgheli']->username);
         $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
         $I->see('Editing', 'h3');
-        $I->see($this->username, '.text-info');
-        $I->fillField("#first_name", $this->firstname . 'edited');
-        $I->fillField('#last_name', $this->lastname . 'edited');
+        $I->see(self::$users['ghelgheli']->username, '.text-info');
+        $I->fillField("#first_name", self::$users['ghelgheli']->firstname . 'edited');
+        $I->fillField('#last_name', self::$users['ghelgheli']->lastname . 'edited');
         $I->selectOption('#male','male');
         $I->fillField('#email', 'blah@blah.com');
         $I->fillField('#phone', '666666');
@@ -141,25 +177,35 @@ class UserCest
         $I->see('User info successfully updated');
         $I->seeCurrentUrlEquals('/user/index');
         $I->seeInDatabase('user', array(
-            'username' => $this->username,
-            'first_name' => $this->firstname . 'edited',
-            'last_name' => $this->lastname . 'edited',
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname . 'edited',
+            'last_name' => self::$users['ghelgheli']->lastname . 'edited',
             'email' => 'blah@blah.com',
         ));
 
+/*
+ *        $I->wantTo('see if user root can assign role to the new user');
+ *        $I->amOnPage('/user/index');
+ *        $I->click('#edit_button_' . $this->username);
+ *        $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
+ *        $I->see('Editing', 'h3');
+ *        $I->see('Roles', 'h4');
+ *        $I->selectOption('/html/body/div[2]/form[2]/table/tbody/tr/td/input', 'Admin');
+ *
+ */
 
         $I->wantTo('check if root can delete the created user in the previous step');
         $I->amLoggedAs(User::find(1));
         $I->amOnPage('/user/index');
-        $I->see($this->username);
-        $I->click('#delete_button_' . $this->username);
+        $I->see(self::$users['ghelgheli']->username);
+        $I->click('#delete_button_' . self::$users['ghelgheli']->username);
         $I->seeCurrentUrlMatches('~/user/delete/(\d+)$~');
         $I->see('Deleting User');
         $I->seeLink('No', '/user/index');
         $I->click('#delete_user_form input[type=submit]');
         $I->seeCurrentUrlEquals('/user/index');
         $I->dontSeeInDatabase('user', array(
-            'username' => $this->username
+            'username' => self::$users['ghelgheli']->username
         ));
 
     }
