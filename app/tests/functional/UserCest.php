@@ -7,13 +7,6 @@ use \Codeception\Util\Stub as Stub;
 
 class UserCest
 {
-    public $username = 'testuser';
-    public $firstname = 'test';
-    public $lastname = 'test';
-    public $password = 'testpass';
-    public $phone = '445566';
-    public $email = 'test@example.com';
-
     private static $users;
     private $persisted_user;
 
