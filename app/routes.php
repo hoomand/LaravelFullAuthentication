@@ -31,7 +31,7 @@ Route::group(array("before" => "auth"), function()
         Route::any('user/create', array('before' => 'allowed:users_create', 'as' => 'user/create', 'uses' => 'UserController@createAction'));
         Route::any('user/edit/{id}', array('as' => 'user.edit', 'before' => 'allowed:users_edit', 'uses' => 'UserController@editAction'))->where('id', '[0-9]+');
         Route::any('user/edit/password/{id}', array('before' => 'allowed:users_edit_password', 'as' => 'user.edit.password', 'uses' => 'UserController@editPasswordAction'))->where('id', '[0-9]+');
-        Route::post('user/edit/roles/{id}', array('before' => 'csrf|allowed:roles_edit', 'uses' => 'UserController@editRole'))->where('id', '[0-9]+');
+        Route::post('user/edit/roles/{id}', array('as' => 'user.edit.roles', 'before' => 'csrf|allowed:roles_edit', 'uses' => 'UserController@editRole'))->where('id', '[0-9]+');
         Route::any('user/delete/{id}', array('before' => 'allowed:users_delete', 'uses' => 'UserController@deleteAction'))->where('id', '[0-9]+');
 
         Route::any('role/index', array('as' => 'role/index', 'before' => 'allowed:roles_view', 'uses' => 'RoleController@indexAction'));

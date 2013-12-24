@@ -41,7 +41,7 @@
     <br />
     <br />
     <h4>Roles</h4>
-    {{ Form::open(array('url' => 'user/edit/roles/' . $user->id, 'method' => 'post')) }}
+    {{ Form::open(array('route' => array('user.edit.roles', $user->id), 'method' => 'post', 'id' => 'edit_user_roles_form')) }}
     <table class="table">
     @foreach($all_roles as $role)
     <tr>
