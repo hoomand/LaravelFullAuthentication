@@ -256,8 +256,7 @@ class UserController extends BaseController {
             User::find($user_id)->roles()->sync(Input::get('roles'));
         }
 
-        return Redirect::back()->with('success', 'Roles got updated successfully');
-
+        return Redirect::route('user.edit', $user_id)->with('success', 'Roles got updated successfully');
     }
 
     public function deleteAction($user_id)
