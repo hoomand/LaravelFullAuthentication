@@ -177,16 +177,37 @@ class UserCest
         ));
     }
 
-/*
- *        $I->wantTo('see if user root can assign role to the new user');
- *        $I->amOnPage('/user/index');
- *        $I->click('#edit_button_' . $this->username);
- *        $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
- *        $I->see('Editing', 'h3');
- *        $I->see('Roles', 'h4');
- *        $I->selectOption('/html/body/div[2]/form[2]/table/tbody/tr/td/input', 'Admin');
- *
- */
+    public function checkUserRootCanAssignRole(TestGuy $I) {
+        $I->wantTo('see if user root can assign role to the new user');
+        $I->amLoggedAs(User::find(1));
+        $I->haveInDatabase('user', array(
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname,
+            'last_name' => self::$users['ghelgheli']->lastname,
+            'email' => self::$users['ghelgheli']->email,
+            'password' => Hash::make(self::$users['ghelgheli']->password),
+            'phone' => self::$users['ghelgheli']->phone,
+            'cellphone' => self::$users['ghelgheli']->cellphone,
+            'email' => self::$users['ghelgheli']->email
+        ));
+
+        $I->amOnPage('/user/index');
+        $I->click('#edit_button_' . self::$users['ghelgheli']->username);
+        $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
+        $I->see('Editing', 'h3');
+        $I->see('Roles', 'h4');
+        $I->see('Admins');
+        $I->see('Moderators');
+        $I->submitForm('#edit_user_roles_form', array(
+            'roles' => array(
+                'admins' => true,
+                'moderators' => true
+            )));
+
+        $I->seeCurrentUrlMatches('~/user/edit/(\d+)$~');
+        $I->see('Success', 'h4');
+        $I->see('Roles got updated successfully');
+    }
 
     public function checkUserRootCanDeleteUser(TestGuy $I) {
         $I->wantTo('check if root can delete the created user in the previous step');
