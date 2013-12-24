@@ -175,6 +175,7 @@ class UserCest
             'last_name' => self::$users['ghelgheli']->lastname . 'edited',
             'email' => 'blah@blah.com',
         ));
+    }
 
 /*
  *        $I->wantTo('see if user root can assign role to the new user');
@@ -187,8 +188,19 @@ class UserCest
  *
  */
 
+    public function checkUserRootCanDeleteUser(TestGuy $I) {
         $I->wantTo('check if root can delete the created user in the previous step');
         $I->amLoggedAs(User::find(1));
+        $I->haveInDatabase('user', array(
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname,
+            'last_name' => self::$users['ghelgheli']->lastname,
+            'email' => self::$users['ghelgheli']->email,
+            'password' => Hash::make(self::$users['ghelgheli']->password),
+            'phone' => self::$users['ghelgheli']->phone,
+            'cellphone' => self::$users['ghelgheli']->cellphone,
+            'email' => self::$users['ghelgheli']->email
+        ));
         $I->amOnPage('/user/index');
         $I->see(self::$users['ghelgheli']->username);
         $I->click('#delete_button_' . self::$users['ghelgheli']->username);
@@ -200,7 +212,6 @@ class UserCest
         $I->dontSeeInDatabase('user', array(
             'username' => self::$users['ghelgheli']->username
         ));
-
     }
 
     public function logout(TestGuy $I) {
