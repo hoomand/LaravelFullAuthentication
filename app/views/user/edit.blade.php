@@ -45,7 +45,7 @@
     <table class="table">
     @foreach($all_roles as $role)
     <tr>
-        <td>{{ Form::checkbox('roles[]', $role->id, ( in_array($role->id, $user_role_ids) ? true : false )) }} {{ ucwords($role->name) }}</td>
+        <td>{{ Form::checkbox('roles[' . $role->name . ']', $role->id, ( in_array($role->id, $user_role_ids) ? true : false ), array('id' => 'role_' . $role->name)) }} {{ ucwords($role->name) }}</td>
     </tr>
     @endforeach
     </table>
