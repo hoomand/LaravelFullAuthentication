@@ -70,10 +70,10 @@ class UserCest
         $I->see('You are logged in');
     }
 
-    public function logout(TestGuy $I) {
+    public function logoutAsRoot(TestGuy $I) {
         $I->am('root');
         $I->amLoggedAs(User::find(1));
-        $I->wantTo('logout');
+        $I->wantTo('see that logged in root can log out');
         $I->amOnPage('/');
         $I->seeLink('Logout', '/logout');
         $I->click('Logout');
