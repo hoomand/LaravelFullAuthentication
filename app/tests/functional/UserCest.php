@@ -54,60 +54,73 @@ class UserCest
         $this->persisted_user->delete();
     }
 
-    public function seeLoginPage(TestGuy $I) {
-
-        $I->wantTo('see the login page');
-        $I->amOnPage('/login');
-        $I->see('Login','h2');
-    }
-
-    public function successfulLoginAsRoot(TestGuy $I) {
-        $I->wantTo('successfully login as root');
-        $I->fillField('#username', 'root');
-        $I->fillField('#password', 'whatever123');
-        $I->click('#login');
-        $I->seeCurrentUrlEquals('/');
-        $I->see('Success', 'h4');
-        $I->see('You are logged in');
-    }
-
-    public function checkUserRootCanSeeUsersLink(TestGuy $I) {
-        $I->wantTo('make sure user root can see the Users link on the home page');
-        # Login as root
-        $I->amLoggedAs(User::find(1));
-
-        $I->amOnPage('/');
-        $I->see('Users', 'a[href$="user/index"]');
-    }
-
     public function rootCanEditProfile(TestGuy $I) {
         $I->am('root');
         $I->wantTo('see if root can edit his profile');
         $I->amLoggedAs(User::find(1));
+        $I->amOnPage('/');
         $I->click('root');
-        $I->see('root', '.container h3');
-        $I->see('First Name');
-        $I->see('Last Name');
+        $I->see('First Name:');
+        $I->see('Last Name:');
         $I->see('Gender');
         $I->see('Email');
         $I->see('Phone');
         $I->see('Cell Phone');
-        $I->seeLink('Change Password');
-        $I->seeLink('Edit Profile');
         $I->click('Edit Profile');
         $I->seeCurrentUrlEquals('/user/profile/edit');
 
-        $I->fillField('#first_name', self::$users['ghelgheli']->first_name);
-        $I->fillField('#last_name', self::$users['ghelgheli']->last_name);
-        $I->fillField('#email', self::$users['ghelgheli']->email);
-        $I->fillField('#phone', self::$users['ghelgheli']->phone);
-        $I->fillField('#cellphone', self::$users['ghelgheli']->cellphone);
+        $I->fillField('#first_name', 'Administrator');
+        $I->fillField('#last_name', 'Administrator');
         $I->selectOption('#female', 'female');
-        $I->click("Update");
-
+        $I->fillField('#email', 'administrator@example.com');
+        $I->fillField('#phone', '778899');
+        $I->fillField('#cellphone', '09125126044');
+        $I->click('Update');
         $I->seeCurrentUrlEquals('/user/profile');
         $I->see('Success', 'h4');
         $I->see('Profile info successfully updated');
+    }
+
+    public function rootCanEditProfilePassword(TestGuy $I) {
+        $I->am('root');
+        $I->wantTo('make sure root can change his password');
+        $I->amLoggedAs(User::find(1));
+        $I->amOnPage('/user/profile');
+        $I->click('Change Password');
+        $I->see('Edit password - root', 'h3');
+        $I->fillField('#password', 'newPass321');
+        $I->fillField('#password_confirmation', 'newPass321');
+        $I->click('Update');
+        $I->see('Success', 'h4');
+        $I->see('Password successfully updated');
+    }
+
+    public function rootCanEditOthersPassword(TestGuy $I) {
+        $I->am('root');
+        $I->wantTo('make sure root can change another users password');
+        $I->amLoggedAs(User::find(1));
+        $I->haveInDatabase('user', array(
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname,
+            'last_name' => self::$users['ghelgheli']->lastname,
+            'email' => self::$users['ghelgheli']->email,
+            'password' => Hash::make(self::$users['ghelgheli']->password),
+            'phone' => self::$users['ghelgheli']->phone,
+            'cellphone' => self::$users['ghelgheli']->cellphone,
+            'email' => self::$users['ghelgheli']->email
+        ));
+
+        $I->amOnPage('/user/index');
+        $I->see(self::$users['ghelgheli']->username);
+        $I->click('#edit_password_button_' . self::$users['ghelgheli']->username);
+        $I->seeCurrentUrlMatches('~/user/edit/password/(\d+)$~');
+        $I->see('Edit password for user');
+
+        $I->fillField('#password', 'newPass321');
+        $I->fillField('#password_confirmation', 'newPass321');
+        $I->click('Update');
+        $I->see('Success', 'h4');
+        $I->see('Password successfully updated');
     }
 
     public function checkUserRootCanAddUser(TestGuy $I) {
