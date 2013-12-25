@@ -79,6 +79,32 @@ class UserCest
         $I->click('Logout');
     }
 
+    public function userSeesCaptchaAfter3UnsuccessfulLoginAttempts(TestGuy $I) {
+        $I->am('visitor');
+        $I->wantTo('check after 3 failed logins, the user sees the captcha prompt');
+        $I->amOnPage('/login');
+
+        $dummy_user = 'blahblahslkdfjslkj';
+        $dummy_password = 'welrkwejlkj';
+        for ($i = 0; $i<5; $i++) {
+            $I->fillField('#username', $dummy_user);
+            $I->fillField('#password', $dummy_password);
+            $I->click('#login');
+            $I->seeCurrentUrlEquals('/login');
+            $I->see('Error');
+        }
+        $I->see('Code');
+        $I->seeElement('#captcha');
+
+        # Now enter correct credentials without captcha code
+        # I expect to see error message saying the captcha
+        # doesn't exist.
+        $I->fillField('#username', 'root');
+        $I->fillField('#password', 'whatever123');
+        $I->click('#login');
+        $I->see('Error');
+    }
+
     public function checkUserRootCanSeeUsersLink(TestGuy $I) {
         $I->wantTo('make sure user root can see the Users link on the home page');
         # Login as root
