@@ -112,6 +112,30 @@ class UserCest
         $I->see('Error');
     }
 
+    public function forgotPasswordLinkWorks(TestGuy $I) {
+        $I->am('visitor');
+        $I->wantTo('make sure a visitor can see Forgot Password link');
+        $I->amOnPage('/login');
+        $I->click('Forgot Password?');
+        $I->seeCurrentUrlEquals('/password/request');
+        $I->see('Password Reset Request', 'h3');
+
+        $I->haveInDatabase('user', array(
+            'username' => self::$users['ghelgheli']->username,
+            'first_name' => self::$users['ghelgheli']->firstname,
+            'last_name' => self::$users['ghelgheli']->lastname,
+            'email' => self::$users['ghelgheli']->email,
+            'password' => Hash::make(self::$users['ghelgheli']->password),
+            'phone' => self::$users['ghelgheli']->phone,
+            'cellphone' => self::$users['ghelgheli']->cellphone,
+            'email' => self::$users['ghelgheli']->email
+        ));
+
+        $I->fillField('#email', self::$users['ghelgheli']->email);
+        $I->click('Reset');
+        $I->see('Success', 'h4');
+    }
+
     public function checkUserRootCanSeeUsersLink(TestGuy $I) {
         $I->wantTo('make sure user root can see the Users link on the home page');
         # Login as root
