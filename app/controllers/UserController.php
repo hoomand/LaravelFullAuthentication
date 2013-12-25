@@ -69,7 +69,7 @@ class UserController extends BaseController {
                 }
             );
 
-            return Redirect::back()->with('success', 'email was successfully sent');
+            return Redirect::route('password/request')->with('success', 'email was successfully sent');
         }
 
         return View::make("user.request");
