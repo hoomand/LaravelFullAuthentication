@@ -79,6 +79,13 @@ class UserCest
         $I->click('Logout');
     }
 
+    public function logoutAsVisitor(TestGuy $I) {
+        $I->am('visitor');
+        $I->wantTo('see that a not logged in user gets redirected to / if he tries to logout');
+        $I->amOnPage('/logout');
+        $I->seeCurrentUrlEquals('/');
+    }
+
     public function userSeesCaptchaAfter3UnsuccessfulLoginAttempts(TestGuy $I) {
         $I->am('visitor');
         $I->wantTo('check after 3 failed logins, the user sees the captcha prompt');
