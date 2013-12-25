@@ -54,6 +54,40 @@ class UserCest
         $this->persisted_user->delete();
     }
 
+    public function seeLoginPage(TestGuy $I) {
+        $I->wantTo('see the login page');
+        $I->amOnPage('/login');
+        $I->see('Login','h2');
+    }
+
+    public function successfulLoginAsRoot(TestGuy $I) {
+        $I->wantTo('successfully login as root');
+        $I->fillField('#username', 'root');
+        $I->fillField('#password', 'whatever123');
+        $I->click('#login');
+        $I->seeCurrentUrlEquals('/');
+        $I->see('Success', 'h4');
+        $I->see('You are logged in');
+    }
+
+    public function logout(TestGuy $I) {
+        $I->am('root');
+        $I->amLoggedAs(User::find(1));
+        $I->wantTo('logout');
+        $I->amOnPage('/');
+        $I->seeLink('Logout', '/logout');
+        $I->click('Logout');
+    }
+
+    public function checkUserRootCanSeeUsersLink(TestGuy $I) {
+        $I->wantTo('make sure user root can see the Users link on the home page');
+        # Login as root
+        $I->amLoggedAs(User::find(1));
+
+        $I->amOnPage('/');
+        $I->see('Users', 'a[href$="user/index"]');
+    }
+
     public function rootCanEditProfile(TestGuy $I) {
         $I->am('root');
         $I->wantTo('see if root can edit his profile');
@@ -246,15 +280,6 @@ class UserCest
         $I->dontSeeInDatabase('user', array(
             'username' => self::$users['ghelgheli']->username
         ));
-    }
-
-    public function logout(TestGuy $I) {
-        $I->am('root');
-        $I->amLoggedAs(User::find(1));
-        $I->wantTo('logout');
-        $I->amOnPage('/');
-        $I->seeLink('Logout', '/logout');
-        $I->click('Logout');
     }
 
 
