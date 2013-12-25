@@ -136,6 +136,12 @@ class UserCest
         $I->see('Success', 'h4');
     }
 
+    public function userResetPageWorks(TestGuy $I) {
+        $I->am('a user who forgot his password and filled the password reset request form');
+        $I->wantTo('make sure I can reset password with the given token');
+
+    }
+
     public function checkUserRootCanSeeUsersLink(TestGuy $I) {
         $I->wantTo('make sure user root can see the Users link on the home page');
         # Login as root
