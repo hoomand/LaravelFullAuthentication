@@ -87,7 +87,7 @@ class UserController extends BaseController {
             );
             $validation = Validator::make(Input::all(), $rules);
             if ($validation->fails())
-                return Redirect::back()->withErrors($validation)->withInput();
+                return Redirect::route('password/reset', $token)->withErrors($validation)->withInput();
 
             $credentials = array('email' => Input::get('email'));
             return Password::reset(
