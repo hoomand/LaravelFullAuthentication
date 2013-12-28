@@ -114,7 +114,7 @@ class UserCest
 
     public function forgotPasswordLinkWorks(TestGuy $I) {
         $I->am('visitor');
-        $I->wantTo('make sure a visitor can see Forgot Password link');
+        $I->wantTo('make sure a user can reset his password using Forgot Password link');
         $I->amOnPage('/login');
         $I->click('Forgot Password?');
         $I->seeCurrentUrlEquals('/password/request');
@@ -134,12 +134,17 @@ class UserCest
         $I->fillField('#email', self::$users['ghelgheli']->email);
         $I->click('Reset');
         $I->see('Success', 'h4');
-    }
 
-    public function userResetPageWorks(TestGuy $I) {
-        $I->am('a user who forgot his password and filled the password reset request form');
-        $I->wantTo('make sure I can reset password with the given token');
-
+        # Going to password reset page with the generated token
+        $newPassword = 'whatever1234';
+        $token = $I->grabFromDatabase('token', 'token', array('email' => self::$users['ghelgheli']->email));
+        $I->amOnPage('/password/reset/' . $token);
+        $I->see('Password Reset', 'h2');
+        $I->fillField('#email', self::$users['ghelgheli']->email);
+        $I->fillField('#password', $newPassword);
+        $I->fillField('#password_confirmation', $newPassword);
+        $I->click('Update Password');
+        $I->see('Success', 'h4');
     }
 
     public function checkUserRootCanSeeUsersLink(TestGuy $I) {
