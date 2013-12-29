@@ -113,6 +113,8 @@ class UserCest
     }
 
     public function forgotPasswordLinkWorks(TestGuy $I) {
+        Mail::pretend();
+
         $I->am('visitor');
         $I->wantTo('make sure a user can reset his password using Forgot Password link');
         $I->amOnPage('/login');
